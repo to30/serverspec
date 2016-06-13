@@ -19,6 +19,7 @@ host = ENV['TARGET_HOST']
 
 options = Net::SSH::Config.for(host)
 
+options[:keys] = ENV['KEY'];
 options[:user] ||= Etc.getlogin
 
 
