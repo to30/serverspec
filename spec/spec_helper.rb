@@ -1,6 +1,6 @@
 require 'serverspec'
 require 'net/ssh'
-require 'highline/import'
+#require 'highline/import'
 
 set :backend, :ssh
 
