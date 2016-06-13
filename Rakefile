@@ -1,5 +1,7 @@
 require 'rake'
 require 'rspec/core/rake_task'
+#require 'ci/reporter/rake/rspec'
+require 'rspec/core/rake_task'
 
 task :spec    => 'spec:all'
 task :default => :spec
@@ -21,6 +23,9 @@ namespace :spec do
     desc "Run serverspec tests to #{original_target}"
     RSpec::Core::RakeTask.new(target.to_sym) do |t|
       ENV['TARGET_HOST'] = original_target
+        if ENV['CI_FLAG']
+          t.rspec_opts = "--format RspecJunitFormatter --out ../report/serverspec/results_#{original_target}.xml"
+        end
       t.pattern = "spec/#{original_target}/*_spec.rb"
     end
   end
