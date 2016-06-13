@@ -23,7 +23,7 @@ namespace :spec do
     RSpec::Core::RakeTask.new(target.to_sym) do |t|
       ENV['TARGET_HOST'] = original_target
         if ENV['CI_FLAG']
-          t.rspec_opts = "--format RspecJunitFormatter --out ../report/serverspec/results_#{original_target}.xml"
+          t.rspec_opts = "--format RspecJunitFormatter --out report/serverspec/results_#{original_target}.xml"
         end
       t.pattern = "spec/#{original_target}/*_spec.rb"
     end
