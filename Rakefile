@@ -1,7 +1,6 @@
 require 'rake'
 require 'rspec/core/rake_task'
 #require 'ci/reporter/rake/rspec'
-require 'rspec/core/rake_task'
 
 task :spec    => 'spec:all'
 task :default => :spec
