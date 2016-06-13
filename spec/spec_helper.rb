@@ -20,8 +20,7 @@ host = ENV['TARGET_HOST']
 options = Net::SSH::Config.for(host)
 
 options[:keys] = ENV['KEY'];
-#options[:user] ||= Etc.getlogin
-options[:user] =glassfish
+options[:user] ||= Etc.getlogin
 
 set :host,        options[:host_name] || host
 set :ssh_options, options
