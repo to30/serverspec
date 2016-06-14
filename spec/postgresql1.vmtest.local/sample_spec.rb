@@ -42,6 +42,15 @@ describe file('/etc/logrotate.d/syslog') do
   it { should contain 'messages' }
   it { should contain 'secure' }
 end
+
+# login users のテスト
+%w{ glassfish tomo }.each do |u|
+  describe user(u) do
+    it { should exist }
+    it { should_not belong_to_group 'wheel' }
+  end
+end
+
  
 
 ##PostgreSQL固有の設定
