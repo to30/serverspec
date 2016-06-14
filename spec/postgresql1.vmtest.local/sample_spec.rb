@@ -1,5 +1,51 @@
 require 'spec_helper'
 
+#hostsファイルが必要なサーバ情報を持っていること
+describe file('/etc/hosts') do
+  it { should contain '192.168.0.119  postgresql1.vmtest.local  postgresql1' }
+  it { should contain '192.168.0.120  postgresql2.vmtest.local  postgresql2' }
+  it { should contain '192.168.0.118  elastic.vmtest.local      elastic' }
+  it { should contain '192.168.0.117  jenkins.vmtest.local      jenkins' }
+end
+
+
+
+#デフォルトゲートウェイの設定
+describe default_gateway do
+  its(:ipaddress) { should eq '192.168.0.1' }
+  its(:interface) { should eq 'eth0' }
+end
+
+# selinuxがdisableであること
+describe selinux do
+  it { should be_disabled }
+end
+
+ 
+# 必要なパッケージが入っていること
+%w{ git yum }.each do |pkg|
+  describe package(pkg) do
+    it { should be_installed }
+  end
+end
+ 
+# 不要サービス停止
+%w{ ip6tables iptables }.each do |services|
+  describe service(services) do
+    it { should_not be_enabled }
+    it { should_not be_running }
+  end
+end
+ 
+# syslog設定
+describe file('/etc/logrotate.d/syslog') do
+  it { should contain 'messages' }
+  it { should contain 'secure' }
+end
+ 
+
+##PostgreSQL固有の設定
+
 describe package('postgresql92-server-9.2.17'), :if => os[:family] == 'redhat' do
   it { should be_installed }
 end
