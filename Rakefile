@@ -2,30 +2,40 @@ require 'rake'
 require 'rspec/core/rake_task'
 #require 'ci/reporter/rake/rspec'
 
-task :spec    => 'spec:all'
-task :default => :spec
+hosts = [
+  {
+    :name  => 'postgresql1.vmtest.local',
+    :roles => %w( base production db ),
+  },
+  {
+    :name  => 'postgresql2.vmtest.local',
+    :roles => %w( base production db ),
+  },
+]
 
-namespace :spec do
-  targets = []
-  Dir.glob('./spec/*').each do |dir|
-    next unless File.directory?(dir)
-    target = File.basename(dir)
-    target = "_#{target}" if target == "default"
-    targets << target
-  end
 
-  task :all     => targets
-  task :default => :all
+hosts = hosts.map do |host|
+  {
+    :name       => host[:name],
+    :short_name => host[:name].split('.')[0],
+    :roles      => host[:roles],
+  }
+end
 
-  targets.each do |target|
-    original_target = target == "_default" ? target[1..-1] : target
-    desc "Run serverspec tests to #{original_target}"
-    RSpec::Core::RakeTask.new(target.to_sym) do |t|
-      ENV['TARGET_HOST'] = original_target
+desc "Run serverspec to all hosts"
+task :serverspec => 'serverspec:all'
+
+namespace :serverspec do
+  task :all => hosts.map {|h| 'serverspec:' + h[:short_name] }
+  hosts.each do |host|
+    desc "Run serverspec to #{host[:name]}"
+    RSpec::Core::RakeTask.new(host[:short_name].to_sym) do |t|
+      ENV['TARGET_HOST'] = host[:name]
         if ENV['CI_FLAG']
-          t.rspec_opts = "--format RspecJunitFormatter --out report/serverspec/results_#{original_target}.xml"
+          t.rspec_opts = "--format RspecJunitFormatter --out report/serverspec/results_#{host[:name]}.xml"
         end
-      t.pattern = "spec/#{original_target}/*_spec.rb"
+      t.pattern = 'spec/{' + host[:roles].join(',') + '}/*_spec.rb'
     end
   end
 end
+
