@@ -1,0 +1,158 @@
+
+
+
+
+####################slack上でHubotを追加#################################
+
+HUBOT_SLACK_TOKEN=xoxb-51401959239-tvrK8jlK5v7Wi9cLshz7fIro   -->多分削除できたと思う
+
+
+HUBOT_SLACK_TOKEN=xoxb-51414082370-W3V9BFybhPhoOArUjygYpBzX
+username:to30hubot
+
+##################slackと連携後######################
+
+
+
+epelのリポジトリを追加 
+# rpm -ivh http://ftp.jaist.ac.jp/pub/Linux/Fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
+
+
+node.jsとRedisをインストール (Redisは入れていない)
+# yum install npm redis
+# y/n を途中で聞かれるので、ｙを入力してEnter
+
+
+Redis起動 （やってない）
+$ sudo /etc/init.d/redis start
+#Redis 自動起動設定
+$ sudo chkconfig redis on
+
+
+coffeeScriptとhubotをインストール 
+$ sudo npm install -g yo coffee-script hubot generator-hubot
+# warning が出たりするが、とりあえず大丈夫
+
+su - ansible
+cd /home/ansible
+mkdir to30hubot
+cd to30hubot/
+yo hubot
+
+vi external-scripts.json
+	"hubot-heroku-keepalive" を削除
+
+export HUBOT_SLACK_TOKEN=xoxb-51414082370-W3V9BFybhPhoOArUjygYpBzX
+export PORT=8081
+
+bin/hubot --adapter slack
+
+slack上で以下を試す
+@to30hubot ping
+	PONGが返ってくる
+
+
+
+
+
+foreverでhubotをデーモン化する 
+
+# foreverをインストール
+$ sudo npm install forever -g
+
+
+
+foremanで、起動するスクリプトを作成する 
+run.shを実行ファイルを作り、以下の内容を記載する
+	#!/bin/bash
+	# 環境変数の設定
+	export HUBOT_SLACK_TOKEN=xoxb-51414082370-W3V9BFybhPhoOArUjygYpBzX
+	export PORT=8081
+	export HUBOT_JENKINS_URL="http://192.168.0.117:8080/jenkins/"
+	export HUBOT_JENKINS_AUTH=""
+	# foreverでhubotをデーモンで起動
+	forever --minUptime 3000 --spinSleepTime 3000 start -c coffee node_modules/.bin/hubot -a slack --name to30hubot
+
+実行権限付与
+chmod 755 run.sh
+シェルの実行
+$ ./run.sh
+
+これでHubotがデーモン化される
+foreverの停止
+forever stopall
+foreverの再起動
+forever restartall
+
+
+
+
+@to30hubot jenkins build serverspec_postgresql2
+@to30hubot jenkins build serverspec_postgresql2
+@to30hubot jenkins list
+@to30hubot jenkins build serverspec01
+
+curlでは実行可能
+curl -X POST http://192.168.0.117:8080/jenkins/job/serverspec_postgresql1/build
+
+
+
+追加のHubot実行スクリプトを作成する 
+scriptsの下にmyscript.cofeeというhubot用のCoffeeScriptを作成する
+
+# Commands:
+#   hubot myscript
+
+module.exports = (robot) ->
+　#単純なエコーを返すだけ。@hubot hi ==> hiと返してくれる
+  robot.respond /hi/i, (msg) ->
+    msg.send 'hi'
+
+　#ビールを飲むの最適な時間を教えてくれる。@hubot ビール飲むのはいつ？ ==> いつ飲めばいいか教えてくれる画像を返す
+  robot.respond /ビール飲むのはいつ？/i, (msg) ->
+    msg.send 'http://up.gc-img.net/post_img/2013/11/GB4KRx3cBCc77MN_9pDVt_29.jpeg'
+
+　#Webアプリケーションをデプロイする。Capistaranoのコマンドをたたいてデプロイ @hubot release production ==>　production, stage, test などパラメタを指定しでデプロイする
+  robot.respond /release (.*)$/i, (msg) ->
+    # hipchatからの文字から引数を取得
+    env = msg.match[1]
+
+    # OSコマンドを実行する準備
+    @exec = require('child_process').exec
+    command = "cd /xxx/xxx/xxx/app && cap TARGET=#{env} deploy prams"
+    msg.send "This is the command #{command}."
+
+    # OSコマンドを実行する
+    @exec command, (error, stdout, stderr) ->
+      msg.send error
+      msg.send stdout
+      msg.send stderr
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

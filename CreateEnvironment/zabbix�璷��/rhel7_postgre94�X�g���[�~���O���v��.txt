@@ -1,0 +1,471 @@
+NTTデータとPostgreSQLが挑んだ総力戦。PostgreSQLを極限まで使い切ったその先に見たものとは
+http://www.publickey1.jp/blog/15/ntt_postgresql_postgresql_nttday2015.html
+
+
+postgresql構築手順
+	インストール前準備（rpm対応とか）
+	インストールと初期設定
+	WALの設定
+	postgresユーザでのSSH公開鍵認証を許可する
+	ストリーミングレプリケーション設定
+
+
+
+
+
+【インストール前準備】
+DVDイメージを暫定リポジトリとする
+cd /media/
+mkdir cdrom
+mount /dev/cdrom /media/cdrom
+
+cd /etc/yum.repos.d/
+
+vi rhel-dvd.repo
+
+[rhel-dvd]
+name=Red Hat Enterprise Linux 6.4 - x86_64 - DVD
+baseurl=file:///media/cdrom/
+enabled=1						#->CDをアンマウントしておくなら「0」に変更し使わなくする
+gpgcheck=1
+gpgkey=file:///media/cdrom/RPM-GPG-KEY-redhat-release
+
+
+
+
+curl -O http://yum.postgresql.org/9.4/redhat/rhel-7-x86_64/pgdg-redhat94-9.4-2.noarch.rpm
+
+rpm -ivh pgdg-redhat94-9.4-2.noarch.rpm
+
+取り敢えずrpmダウンロード
+yum install --downloadonly --downloaddir=/root/download postgresql94-server postgresql94-devel postgresql94-contrib
+
+
+【インストールと初期設定】
+インストール
+yum install -y postgresql94-server postgresql94-devel postgresql94-contrib
+デフォルトのディレクトリを変更
+vi /usr/lib/systemd/system/postgresql-9.4.service
+#Environment=PGDATA=/var/lib/pgsql/9.4/data/
+Environment=PGDATA=/data/pgdata1/
+
+
+(1) postgresユーザのパスワード設定
+
+passwd postgres
+	zabbix
+
+(2) postgresユーザの環境変数設定
+
+
+# vi /var/lib/pgsql/.bash_profile
+
+PGDATA=/var/lib/pgsql/9.4/data
+export PGDATA
+　　　↓変更
+PGDATA=/data/pgdata1
+export PGDATA
+
+
+※ファイルの末尾に追加※
+export PATH=$PATH:/usr/pgsql-9.4/bin
+
+(3) データベースクラスタ用ディレクトリ（$PGDATA）作成
+# cd /
+# mkdir -m 777 data
+# su - postgres
+-bash-4.1$ cd /data/
+-bash-4.1$ mkdir -m 700 pgdata1
+
+(4) データベースクラスタ作成
+
+-bash-4.1$ initdb --encoding=UTF8 --no-locale --pgdata=/data/pgdata1 --auth=ident
+
+(5) リッスンアドレスとログ出力設定の変更
+
+-bash-4.1$ vi /data/pgdata1/postgresql.conf
+
+ファイル名：/data/pgdata1/postgresql.conf 
+ 
+#------------------------------------------------------------------------------
+# CONNECTIONS AND AUTHENTICATION
+#------------------------------------------------------------------------------
+#listen_addresses = 'localhost'         # what IP address(es) to listen on;
+　　　↓変更
+listen_addresses = '*'                  # what IP address(es) to listen on;
+
+
+※変更なし※
+#------------------------------------------------------------------------------
+# ERROR REPORTING AND LOGGING
+#------------------------------------------------------------------------------
+log_destination = 'stderr'              # Valid values are combinations of
+logging_collector = on                  # Enable capturing of stderr and csvlog
+log_directory = 'pg_log'                # directory where log files are written,
+
+
+log_filename = 'postgresql-%a.log'      # log file name pattern,
+　　　↓変更
+log_filename = 'postgresql-%Y%m%d.log'  # log file name pattern,
+
+
+※変更なし※
+log_truncate_on_rotation = on           # If on, an existing log file with the
+
+
+log_rotation_age = 1d                   # Automatic rotation of logfiles will
+　　　↓変更
+log_rotation_age = 7d                   # Automatic rotation of logfiles will
+
+
+※変更なし※
+log_rotation_size = 0                   # Automatic rotation of logfiles will
+
+
+log_line_prefix = '< %m >'                      # special values:
+　　　↓変更
+log_line_prefix = '%t [%p] '                    # special values:
+
+
+※変更なし※
+log_timezone = 'Japan'
+
+
+(6) スーパーユーザのパスワード設定
+-bash-4.1$ pg_ctl start -w
+完了
+サーバ起動完了
+-bash-4.1$ psql
+psql (9.3.4)
+
+postgres=# alter role postgres with password 'zabbix';
+ALTER ROLEが返ってくる
+postgres=# \q
+-bash-4.1$ pg_ctl stop -m fast
+サーバ停止処理の完了を待っています....完了
+サーバは停止しました
+
+
+(7) クライアント認証の設定
+
+-bash-4.1$ vi /data/pgdata1/pg_hba.conf
+
+ファイル名：/data/pgdata1/pg_hba.conf 
+ 
+# "local" is for Unix domain socket connections only
+local   all             all                                     peer
+　　　↓変更
+# "local" is for Unix domain socket connections only
+#local   all             all                                     peer　※コメントアウト
+
+
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            ident
+　　　↓変更
+# IPv4 local connections:
+#host    all             all             127.0.0.1/32            ident　※コメントアウト
+
+
+# IPv6 local connections:
+host    all             all             ::1/128                 ident
+　　　↓変更
+# IPv6 local connections:
+#host    all             all             ::1/128                 ident　※コメントアウト
+
+
+※ファイルの末尾に追加※
+local   all             postgres                                peer
+local   all             all                                     md5
+host    all             all             192.168.0.0/24          md5
+
+ 
+#######################################################################################################################
+【WALの設定】
+
+アーカイブログ用のディレクトリ作成
+# cd /
+# mkdir -m 777 dbbkup
+# su - postgres
+-bash-3.2$ cd /dbbkup/
+-bash-3.2$ mkdir -m 700 pgdata1
+-bash-3.2$ cd pgdata1/
+-bash-3.2$ mkdir -m 700 pg_arch
+
+WALの出力レベルとアーカイブモードを変更します。 
+PITR(Point In Time Recovery)を行うためにはWALの出力レベル(wal_level)を archive、
+またはhot_standbyに設定する必要があります。 
+デフォルトはminimalになっています。 
+また、古いWALはデフォルトでは捨てられてしまいますが、 
+リカバリの時に必要となる可能性があるため、 WALとは別のディレクトリに保管しておきます。 
+この古くなって別の場所に保管されたWALをアーカイブログと呼びます。
+
+
+-bash-3.2$ vi /data/pgdata1/postgresql.conf
+
+ファイル名：/data/pgdata1/postgresql.conf 
+ 
+#wal_level = minimal                  # minimal, archive, or hot_standby
+　　　↓変更
+wal_level = hot_standby               # minimal, archive, or hot_standby
+
+
+#archive_mode = off           # allows archiving to be done
+　　　↓変更
+archive_mode = on             # allows archiving to be done
+
+
+#archive_command = ''         # command to use to archive a logfile segment
+　　　↓変更
+archive_command = 'cp %p /dbbkup/pgdata1/pg_arch/%f' # command to use to archive a logfile segment
+
+設定が完了したら、PostgreSQLを再起動して設定を反映させます。
+-bash-3.2$ pg_ctl restart -D /data/pgdata1 -m fast -w
+
+
+#########################################################################################
+【postgresユーザでのSSH公開鍵認証を許可する】
+アクティブ側で公開鍵を作成する->（ログイン元からやるのが普通では？）
+-bash-4.2$ cd
+-bash-4.2$ pwd
+/var/lib/pgsql
+公開鍵の作成（パスフレーズは無しで作成する）
+-bash-4.2$ ssh-keygen -t rsa
+作成された.ssh/id_rsa.pubをスタンバイ側.ssh/authorized_keysにコピーする
+コピーしたら権限を変更する
+-bash-4.2$ chmod 700 .ssh
+-bash-4.2$ chmod 600 .ssh/authorized_keys
+アクティブとスタンバイを読み替えて両方やる
+
+
+#########################################################################################
+
+【ストリーミングレプリケーション設定】
+
+アクティブ側PostgreSQLの設定
+データベースクラスタ（$PGDATA環境変数）確認 
+
+-bash-3.2$ echo $PGDATA
+/data/pgdata1
+
+ 
+(1) WAL転送プロセスの設定
+スタンバイ側からのWALの送信要求に応えるプロセスの数を設定
+
+-bash-3.2$ vi /data/pgdata1/postgresql.conf
+
+ファイル名：/data/pgdata1/postgresql.conf 
+ 
+
+※以下、該当箇所のみ変更※
+
+レプリケーションの種類を指定する
+
+
+設定値 意味 
+on  同期  
+remote_write メモリ同期  
+local  スレーブ非同期 
+off  完全非同期  
+
+synchronous_commit = on
+
+
+#max_wal_senders = 0          # max number of walsender processes
+　　　↓変更
+max_wal_senders = 2           # max number of walsender processes
+
+# 許可するスレーブDBの名前
+# セキュリティ的に絞りたいところではあるが，テストサーバなのでアスタリスクで全許可
+# 複数の特定の場合は，以下のようにすると良い
+# synchronous_standby_names = 'pg-test01,pg-test02'
+synchronous_standby_names = '*'
+
+synchronous_standby_names = '*'
+
+
+(2) ホストベース認証の設定
+
+　スタンバイ側からのレプリケーション要求を許可するための認証設定を行います。 
+　スタンバイ側（IPアドレス/ネットマスクは192.168.0.165/24）からTCP/IP接続で 
+　postgresユーザで接続してきた場合は信頼（許可）します。 
+
+-bash-3.2$ vi /data/pgdata1/pg_hba.conf 
+
+ 
+ファイル名：/data/pgdata1/pg_hba.conf 
+ 
+※ファイルの末尾に追加※
+host     replication     postgres        192.168.0.165/24         trust
+
+(3) PostgreSQLインスタンスの再起動
+-bash-3.2$ pg_ctl restart -w
+
+
+(4) ベースバックアップ前のWALの開始位置記録
+ベースバックアップ取得前にpg_start_backup()を実行します。 
+ベースバックアップ中に生成されたWALを後から追いつきで適用するために、 
+WALの開始位置を記録します
+
+-bash-3.2$ psql -c "select pg_start_backup('20151117_Backup')"
+
+ pg_start_backup
+-----------------
+ 0/3000028
+(1 行)
+
+(5) ベースバックアップの取得
+データベースクラスタのベースバックアップを取得します。 
+取得にはLinuxのtarコマンドなどを使用します。 
+必ずしもアーカイブする必要はありませんが、
+スタンバイ側へファイルを 転送しやすくするためにアーカイブしています。 
+
+-bash-3.2$ cd /data/
+-bash-3.2$ tar zcvf /dbbkup/20151117_pgdata1.tar.gz ./pgdata1
+
+-bash-3.2$ ls -l /dbbkup/
+
+合計 4328
+-rw-r--r-- 1 postgres postgres 4428018 11月 17 16:42 20151117_pgdata1.tar.gz
+drwx------ 3 postgres postgres      20 11月 17 16:16 pgdata1
+
+(6) ベースバックアップ後のWALの終了位置記録
+
+　ベースバックアップの取得が終わったら、ベースバックアップ中に生成された 
+　WALの終了位置を記録します。 
+
+-bash-3.2$ psql -c "select pg_stop_backup()"
+
+NOTICE:  pg_stop_backup complete, all required WAL segments have been archived
+ pg_stop_backup
+----------------
+ 0/3000128
+(1 行)
+
+######
+
+スタンバイ側PostgreSQLの設定
+
+データベースクラスタ（$PGDATA環境変数）確認 
+
+-bash-3.2$ echo $PGDATA
+/data/pgdata1
+
+(1) アクティブ側で取得したベースバックアップの転送
+
+アクティブ側で取得したベースバックアップをscpコマンドを使って スタンバイ側にコピーします。
+rsync等を使ってコピーしても構いません。
+
+-bash-3.2$ cd /dbbkup/
+-bash-3.2$ scp -p root@192.168.0.164:/dbbkup/20151117_pgdata1.tar.gz .
+
+
+(2) ベースバックアップの展開
+ベースバックアップのtar.gzを$PGDATAの位置に展開します
+
+-bash-3.2$ cd /data/
+-bash-3.2$ tar zxvf /dbbkup/20151117_pgdata1.tar.gz
+-bash-4.2$ ls -l
+合計 4
+drwx------ 19 postgres postgres 4096 11月 17 16:39 pgdata1
+
+(3) ホットスタンバイの設定
+ベースバックアップとしてアクティブ側からコピーした postgresql.confファイルを
+スタンバイ用に編集します。 
+まず、PostgreSQLインスタンスが接続をリスニングするIPアドレスを 
+スタンバイサーバのIPアドレスに変更します。 
+また、ホットスタンバイの設定を有効にします。 
+これによりアクティブ側での変更を反映させている最中も SQLによる参照を許可します
+
+-bash-3.2$ vi /data/pgdata1/postgresql.conf 
+ 
+ファイル名：/data/pgdata1/postgresql.conf 
+
+#####多分間違っているここから#####
+※以下、該当箇所のみ変更※ 
+listen_addresses = '192.168.0.165'
+　　　↓変更
+listen_addresses = '192.168.0.164'
+#####多分間違っているここまで#####
+
+#hot_standby = off                    # "on" allows queries during recovery
+　　　↓変更
+hot_standby = on                      # "on" allows queries during recovery
+
+(4) ホストベース認証の設定
+アクティブ側でレプリケーション要求を許可するための設定を行いましたが、 
+スタンバイ側では不要ですので該当行を削除します。 (コメントアウト)
+
+-bash-3.2$ vi /data/pgdata1/pg_hba.conf 
+
+#host     replication     postgres        192.168.0.165/24         trust
+
+
+(5) アクティブ側からWALを受信するための設定
+
+　レプリケーションの際に、アクティブ側からWALを取得するための設定を行います。
+
+vi /data/pgdata1/recovery.conf 
+
+ファイル名：/data/pgdata1/recovery.conf 
+ 
+※ファイルを新規作成※
+standby_mode = 'on'
+primary_conninfo = 'host=192.168.0.164 port=5432 user=postgres password=zabbix'
+restore_command = 'scp "192.168.0.164:/dbbkup/pgdata1/pg_arch/%f" "%p"'
+trigger_file = '/data/pgdata1/trigger_file'
+
+(6) PostgreSQLインスタンスの起動
+
+　スタンバイ側の設定が終わったら、PostgreSQLインスタンスを起動します。 
+-bash-3.2$ pg_ctl start -w
+
+
+########################
+確認
+アクティブ側での確認
+
+　アクティブ側で現在のトランザクションログの書き込み位置を確認します。
+-bash-3.2$ psql -c "select pg_current_xlog_location()"
+
+スタンバイ側での確認
+
+　続いてスタンバイ側でストリーミングレプリケーションにより 
+　受信して書き込まれたトランザクションログの最後の位置を確認します。 
+-bash-3.2$ psql -c "select pg_last_xlog_receive_location()"
+
+値が一致すればOK
+########################
+自動起動
+systemctl enable postgresql-9.4
+
+
+########################
+使用した設定ファイル（postgresql-9.4.serviceは除く）
+cp /data/pgdata1/postgresql.conf .
+
+cp /data/pgdata1/pg_hba.conf .
+
+cp /data/pgdata1/recovery.conf .（これはスタンバイ側のみに存在）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

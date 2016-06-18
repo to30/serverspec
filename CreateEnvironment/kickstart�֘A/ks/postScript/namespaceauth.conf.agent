@@ -1,0 +1,13 @@
+[fileserver]
+allow *
+[puppetmaster]
+allow *
+[puppetrunner]
+allow *
+[puppetbucket]
+allow *
+[puppetreports]
+allow *
+[resource]
+allow *
+

@@ -1,0 +1,123 @@
+
+【Elasticsearchインストール】
+
+yum install java-1.7.0-openjdk
+mkdir tmp
+cd tmp/
+curl -L -O https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-2.3.3.rpm
+rpm -i elasticsearch-2.3.3.rpm
+service elasticsearch start
+curl http://127.0.0.1:9200
+
+
+【Logstashインストール】
+
+curl -L -O https://download.elastic.co/logstash/logstash/packages/centos/logstash-2.3.2-1.noarch.rpm
+rpm -i logstash-2.3.2-1.noarch.rpm
+rpm -qa | grep log
+cd /opt/logstash/
+./bin/logstash-plugin install logstash-input-beats
+vi logstash.conf
+##########
+input {
+  beats {
+    port => 5044
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => "192.168.0.118:9200"
+    sniffing => true
+    manage_template => false
+    index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}"
+    document_type => "%{[@metadata][type]}"
+  }
+}
+##########
+
+service logstash start
+
+
+
+【Kibanaインストール】
+
+cd /home/tomo/tmp
+
+curl -L -O https://download.elastic.co/kibana/kibana/kibana-4.5.1-linux-x64.tar.gz
+
+tar xzvf kibana-4.5.1-linux-x64.tar.gz
+cd kibana-4.5.1-linux-x64/
+./bin/kibana &
+
+curl -L -O http://download.elastic.co/beats/dashboards/beats-dashboards-1.2.3.zip
+unzip beats-dashboards-1.2.3.zip
+cd beats-dashboards-1.2.3/
+./load.sh
+
+cd /home/tomo/tmp/kibana-4.5.1-linux-x64/config
+cp kibana.yml kibana.yml.org
+vi  kibana.yml
+##########
+server.port: 5601 コメントを取る
+server.host: "192.168.22.70"　コメント取る
+elasticsearch.url: "http://192.168.22.70:9200"
+pid.file: /var/run/kibana.pid　コメントとる
+logging.verbose: true 一度確認でコメントを外して後でfalseにする
+
+##########
+
+
+【packet beatのインストール】
+
+yum install libpcap
+curl -L -O https://download.elastic.co/beats/packetbeat/packetbeat-1.2.3-x86_64.rpm
+rpm -vi packetbeat-1.2.3-x86_64.rpm
+rpm -qa | grep packet
+cd /etc/packetbeat/
+cp packetbeat.yml packetbeat.yml.org
+vi packetbeat.yml
+##########
+監視させたいサービスのポート番号とか
+##########
+
+curl -XPUT 'http://192.168.0.118:9200/_template/packetbeat' -d@/etc/packetbeat/packetbeat.template.json
+
+service packetbeat start
+
+curl -XGET 'http://192.168.0.118:9200/packetbeat-*/_search?pretty'
+
+
+【file beatのインストール】
+curl -L -O https://download.elastic.co/beats/filebeat/filebeat-1.2.3-x86_64.rpm
+rpm -vi filebeat-1.2.3-x86_64.rpm
+cd /etc/filebeat/
+cp filebeat.yml filebeat.yml.org
+vi filebeat.yml
+##########
+ 
+ - /var/log/messages　指定
+hosts: ["192.168.22.70:9200"]　指定
+##########
+curl -XPUT 'http://192.168.0.118:9200/_template/filebeat?pretty' -d@/etc/filebeat/filebeat.template.json
+
+
+
+【top beatのインストール】
+curl -L -O https://download.elastic.co/beats/topbeat/topbeat-1.2.3-x86_64.rpm
+
+rpm -vi topbeat-1.2.3-x86_64.rpm
+rpm -qa | grep topbeat
+cd /etc/topbeat/
+vi topbeat.yml
+
+
+curl -XPUT 'http://192.168.0.118:9200/_template/topbeat' -d@/etc/top
+
+
+ダッシュボード生成
+git clone https://github.com/elastic/beats-dashboards.git
+cd beats-dashboards/
+./load.sh -url 192.168.0.118:9200
+
+

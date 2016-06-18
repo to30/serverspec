@@ -1,0 +1,92 @@
+
+
+sadf -P ALL 1 10 /var/log/sa/sa03 >/tmp/sadf.txt
+
+
+利用可能なオプション:
+[ -d | -D | -H | -p | -x ] [ -h ] [ -t ] [ -V ]
+[ -P { <cpu> [,...] | ALL } ] [ -s [ <hh:mm:ss> ] ] [ -e [ <hh:mm:ss> ] ]
+
+sadf -P ALL -h -t
+コアの情報も取れてるけど判りにくい
+[root@postgresql2 topbeat]# sadf -P ALL -h -t
+postgresql2.vmtest.local;-1;2016-06-03 18:22:14;LINUX-RESTART
+# hostname;interval;timestamp;CPU;%user;%nice;%system;%iowait;%steal;%idle[...]
+postgresql2.vmtest.local;-1;2016-06-03 18:35:05;LINUX-RESTART
+# hostname;interval;timestamp;CPU;%user;%nice;%system;%iowait;%steal;%idle[...]
+postgresql2.vmtest.local;600;2016-06-03 18:50:01;-1;0.03;0.00;0.08;0.00;0.00;99.89;0;0.05;0.00;0.14;0.00;0.00;99.81;1;0.03;0.00;0.08;0.00;0.00;99.89;2;0.02;0.00;0.03;0.00;0.00;99.95
+postgresql2.vmtest.local;599;2016-06-03 19:00:01;-1;0.05;0.00;0.13;0.00;0.00;99.82;0;0.08;0.00;0.23;0.00;0.00;99.69;1;0.04;0.00;0.11;0.00;0.00;99.86;2;0.03;0.00;0.06;0.00;0.00;99.90
+postgresql2.vmtest.local;600;2016-06-03 19:10:01;-1;0.03;0.00;0.10;0.00;0.00;99.87;0;0.04;0.00;0.13;0.00;0.00;99.84;1;0.01;0.00;0.04;0.00;0.00;99.95;2;0.04;0.00;0.14;0.00;0.00;99.82
+postgresql2.vmtest.local;600;2016-06-03 19:20:01;-1;0.03;0.00;0.09;0.00;0.00;99.88;0;0.04;0.00;0.12;0.00;0.00;99.84;1;0.03;0.00;0.10;0.00;0.00;99.87;2;0.02;0.00;0.06;0.00;0.00;99.92
+postgresql2.vmtest.local;600;2016-06-03 19:30:01;-1;0.03;0.00;0.10;0.00;0.00;99.87;0;0.05;0.00;0.13;0.00;0.00;99.82;1;0.03;0.00;0.10;0.00;0.00;99.87;2;0.02;0.00;0.05;0.00;0.00;99.93
+postgresql2.vmtest.local;600;2016-06-03 19:40:01;-1;0.03;0.00;0.09;0.00;0.00;99.88;0;0.04;0.00;0.12;0.00;0.00;99.84;1;0.02;0.00;0.06;0.00;0.00;99.92;2;0.03;0.00;0.08;0.00;0.00;99.89
+postgresql2.vmtest.local;600;2016-06-03 19:50:01;-1;0.03;0.00;0.10;0.00;0.00;99.88;0;0.04;0.00;0.17;0.00;0.00;99.78;1;0.02;0.00;0.06;0.00;0.00;99.92;2;0.02;0.00;0.06;0.00;0.00;99.92
+postgresql2.vmtest.local;599;2016-06-03 20:00:01;-1;0.03;0.00;0.11;0.00;0.00;99.86;0;0.03;0.00;0.13;0.00;0.00;99.84;1;0.03;0.00;0.14;0.00;0.00;99.83;2;0.02;0.00;0.06;0.00;0.00;99.91
+postgresql2.vmtest.local;598;2016-06-03 20:10:01;-1;0.08;0.00;0.19;0.00;0.00;99.73;0;0.09;0.00;0.22;0.00;0.00;99.69;1;0.10;0.00;0.25;0.00;0.00;99.65;2;0.05;0.00;0.11;0.00;0.00;99.84
+postgresql2.vmtest.local;599;2016-06-03 20:20:01;-1;0.07;0.00;0.19;0.00;0.00;99.73;0;0.08;0.00;0.25;0.00;0.00;99.67;1;0.07;0.00;0.17;0.00;0.00;99.75;2;0.07;0.00;0.16;0.00;0.00;99.77
+postgresql2.vmtest.local;599;2016-06-03 20:30:01;-1;0.06;0.00;0.17;0.00;0.00;99.76;0;0.09;0.00;0.24;0.00;0.00;99.67;1;0.04;0.00;0.10;0.00;0.00;99.85;2;0.07;0.00;0.18;0.00;0.00;99.76
+
+RHEL6系が対応しているバージョンが9系なのでsadfでjsonを吐けない（10.3位から使えるがRHEL7も未だ9系）
+[root@postgresql2 topbeat]# sadf -P ALL -x -t
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configure PUBLIC "DTD v2.5 sysstat //EN"
+"http://pagesperso-orange.fr/sebastien.godard/sysstat.dtd">
+<sysstat>
+        <sysdata-version>2.5</sysdata-version>
+        <host nodename="postgresql2.vmtest.local">
+                <sysname>Linux</sysname>
+                <release>2.6.32-642.1.1.el6.x86_64</release>
+                <machine>x86_64</machine>
+                <number-of-cpus>3</number-of-cpus>
+                <file-date>2016-06-03</file-date>
+                <statistics>
+                        <timestamp date="2016-06-03" time="18:50:01" interval="600">
+                                <cpu-load>
+                                        <cpu number="all" user="0.03" nice="0.00" system="0.08" iowait="0.00" steal="0.00" idle="99.89"/>
+                                        <cpu number="0" user="0.05" nice="0.00" system="0.14" iowait="0.00" steal="0.00" idle="99.81"/>
+                                        <cpu number="1" user="0.03" nice="0.00" system="0.08" iowait="0.00" steal="0.00" idle="99.89"/>
+                                        <cpu number="2" user="0.02" nice="0.00" system="0.03" iowait="0.00" steal="0.00" idle="99.95"/>
+                                </cpu-load>
+                        </timestamp>
+                        <timestamp date="2016-06-03" time="19:00:01" interval="599">
+                                <cpu-load>
+                                        <cpu number="all" user="0.05" nice="0.00" system="0.13" iowait="0.00" steal="0.00" idle="99.82"/>
+                                        <cpu number="0" user="0.08" nice="0.00" system="0.23" iowait="0.00" steal="0.00" idle="99.69"/>
+                                        <cpu number="1" user="0.04" nice="0.00" system="0.11" iowait="0.00" steal="0.00" idle="99.86"/>
+                                        <cpu number="2" user="0.03" nice="0.00" system="0.06" iowait="0.00" steal="0.00" idle="99.90"/>
+                                </cpu-load>
+                        </timestamp>
+                        <timestamp date="2016-06-03" time="19:10:01" interval="600">
+                                <cpu-load>
+                                        <cpu number="all" user="0.03" nice="0.00" system="0.10" iowait="0.00" steal="0.00" idle="99.87"/>
+                                        <cpu number="0" user="0.04" nice="0.00" system="0.13" iowait="0.00" steal="0.00" idle="99.84"/>
+                                        <cpu number="1" user="0.01" nice="0.00" system="0.04" iowait="0.00" steal="0.00" idle="99.95"/>
+                                        <cpu number="2" user="0.04" nice="0.00" system="0.14" iowait="0.00" steal="0.00" idle="99.82"/>
+                                </cpu-load>
+                        </timestamp>
+                        <timestamp date="2016-06-03" time="21:00:01" interval="599">
+                                <cpu-load>
+                                        <cpu number="all" user="0.07" nice="0.00" system="0.17" iowait="0.00" steal="0.00" idle="99.77"/>
+                                        <cpu number="0" user="0.11" nice="0.00" system="0.30" iowait="0.00" steal="0.00" idle="99.59"/>
+                                        <cpu number="1" user="0.05" nice="0.00" system="0.12" iowait="0.00" steal="0.00" idle="99.84"/>
+                                        <cpu number="2" user="0.04" nice="0.00" system="0.09" iowait="0.00" steal="0.00" idle="99.87"/>
+                                </cpu-load>
+                        </timestamp>
+                </statistics>
+                <restarts>
+                        <boot date="2016-06-03" time="18:22:14"/>
+                        <boot date="2016-06-03" time="18:35:05"/>
+                </restarts>
+                <comments>
+                </comments>
+        </host>
+</sysstat>
+[root@postgresql2 topbeat]#
+
+
+
+
+
+
+
+

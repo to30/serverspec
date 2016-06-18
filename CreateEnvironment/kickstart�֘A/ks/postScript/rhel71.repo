@@ -1,0 +1,12 @@
+[rhel71]
+name=Red Hat Enterprise Linux 7.1 - x86_64 - DVD
+baseurl=http://10.193.32.96/repos/rhel/cdrom/rhel71
+
+#このリポジトリを無効化する際は下のコメントアウトを外してください
+#0は無効１は有効
+enabled=1
+
+#パッケージの署名確認有効化中無効化は0にして下さい
+#１はパッケージの署名確認を行う。０は行わない
+gpgcheck=1
+gpgkey=http://10.193.32.96/repos/rhel/cdrom/rhel71/RPM-GPG-KEY-redhat-release

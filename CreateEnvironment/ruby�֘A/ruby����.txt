@@ -1,0 +1,120 @@
+rbenvを入れてRubyの必要となるバージョンを全て入れる。
+
+git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+ more .bash_profile
+ echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+ exec $SHELL -l
+ type rbenv
+ rbenv --version
+ git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+ yum install -y gcc openssl-devel libyaml-devel libffi-devel readline-devel zlib-devel gdbm-devel ncurses-devel
+ more .bash_profile
+ rbenv version
+ rbenv install --list
+ rbenv install -v 2.0.0-p576
+ rbenv global 2.0.0-p576
+
+
+/root/.rbenv/versions の下に各バージョンのディレクトリが作成される
+
+[root@mappet versions]# pwd
+/root/.rbenv/versions
+[root@mappet versions]# ls -ltr
+合計 4
+drwxr-xr-x 6 root root 4096  9月  3 15:02 2015 2.0.0-p576
+
+
+
+どっかのサーバでインストールしたのを持っていけばいける？
+
+
+[root@mappet tmp]# /root/.rbenv/plugins/ruby-build/bin/ruby-build 2.1.0 /root/tmp/ruby-2.1.0
+Downloading yaml-0.1.6.tar.gz...
+-> https://dqw8nmjcqpjn7.cloudfront.net/7da6971b4bd08a986dd2a61353bc422362bd0edcc67d7ebaac68c95f74182749
+Installing yaml-0.1.6...
+Installed yaml-0.1.6 to /root/tmp/ruby-2.1.0
+
+Downloading ruby-2.1.0.tar.gz...
+-> https://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.0.tar.gz
+Installing ruby-2.1.0...
+
+
+
+ローカルgemリポジトリ作成
+kdir -p local_gems/gems
+cd local_gems/gems
+#gemファイルをとってくる
+今回は
+https://rubygems.org/gems/builder/versions/3.2.2
+から
+builder-3.2.2.gem
+をダウンロード
+
+cd ..
+ls (gemsがあることを確認)
+[root@mappet local_gems]# ls
+gems              
+
+gem generate_index
+
+gem generate_indexごとWEBサーバへ配置
+
+後は
+gem source -a http://192.168.0.154/generate_index
+
+とか
+Gemfileに
+source "http://192.168.0.154/generate_index"
+って感じでいかないかなー
+
+
+もう一つの方法（本命はこっちか）
+アーカイブをキャッシュする
+
+RUBY_BUILD_CACHE_PATH 環境変数を使うと，ビルド中にダウンロードする tar ball をそこにおいてくれます。
+すでにキャッシュに存在する場合は，それを利用してくれます。
+
+
+$ RUBY_BUILD_CACHE_PATH=/tmp rbenv install 2.0.0-p0
+
+
+同じバージョンの Ruby を再ビルドする場合くらいしか使えないような気もしますが，
+複数のサーバで共有したり，手元にダウンロードしてあるアーカイブを使ったりとかいう状況だと役に立つかもしれません
+
+RDoc, RI 用情報を生成しない
+
+なんだかんだいって RDoc や RI 用情報の生成に時間がかかる (というか進捗が見えないまま時間がすぎるのがイヤ) ので，
+必要ないのであれば生成しないようにできます。(MatzRuby の場合)
+
+
+$ CONFIGURE_OPTS="--disable-install-rdoc" rbenv install -v 2.0.0-p0
+
+
+[root@mappet tmp]# RUBY_BUILD_CACHE_PATH=/tmp rbenv install 2.2.2
+Downloading ruby-2.2.2.tar.gz...
+-> https://dqw8nmjcqpjn7.cloudfront.net/5ffc0f317e429e6b29d4a98ac521c3ce65481bfd22a8cf845fa02a7b113d9b44
+Installing ruby-2.2.2...
+Installed ruby-2.2.2 to /root/.rbenv/versions/2.2.2
+
+[root@mappet tmp]# echo $RUBY_BUILD_CACHE_PATH
+/root/tmp/ruby-2.2.3
+
+確かに落ちている。。。使えそう。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

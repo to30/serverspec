@@ -1,0 +1,254 @@
+多分結論
+failover.sh実行時に
+ExistingSSHCommand: postgres@zagresql02 -T /usr/pgsql-9.4/bin/pg_ctl -D /data/pgdata1 promote
+実行結果が
+Permission denied, please try again.
+Permission denied, please try again.
+Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).
+でssh認証が単に失敗していることが原因。なので
+アカウントpostgresを作成し、
+ssh-keygen -t rsa
+でrsa鍵を作成し、
+id_rsa.pubの中身を各DBサーバのauthorized_keysへ追記し、
+pgpool自体はrootで実行しているので
+rootの/root/.ssh下に
+id_rsa
+をコピー
+これで各PgpoolサーバからDBサーバへの鍵無しログインが可能になったので問題は解消する筈
+
+
+状況確認
+	192.168.0.164（masterDB）
+
+	192.168.0.169（PgpoolMaster）
+	164のダウンを検知して165へ切り替わっているが165への接続がread-only transactionとして処理されエラーとなっている
+
+
+ 2572:20151202:175235.747 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+        Is the server running on host "192.168.0.162" and accepting
+        TCP/IP connections on port 9999?
+
+  2577:20151202:175235.747 database is down: reconnecting in 10 seconds
+  2580:20151202:175235.747 database is down: reconnecting in 10 seconds
+  2569:20151202:175235.748 database is down: reconnecting in 10 seconds
+  2575:20151202:175235.748 database is down: reconnecting in 10 seconds
+  2565:20151202:175235.748 database is down: reconnecting in 10 seconds
+  2578:20151202:175235.748 database is down: reconnecting in 10 seconds
+  2574:20151202:175235.748 database is down: reconnecting in 10 seconds
+  2579:20151202:175235.748 database is down: reconnecting in 10 seconds
+  2566:20151202:175235.749 database is down: reconnecting in 10 seconds
+  2567:20151202:175235.749 database is down: reconnecting in 10 seconds
+  2572:20151202:175235.749 database is down: reconnecting in 10 seconds
+  2570:20151202:175238.853 database connection re-established
+  2560:20151202:175238.854 database connection re-established
+  2560:20151202:175238.864 Zabbix agent item "net.if.in[enp0s3]" on host "zagresql01.vmtest.local" failed: first network error, wait for 15 seconds
+  2563:20151202:175239.760 database connection re-established
+  2563:20151202:175239.771 Zabbix agent item "system.cpu.util[,steal]" on host "zabbix01.vmtest.local" failed: first network error, wait for 15 seconds
+  2564:20151202:175242.769 database connection re-established
+  2562:20151202:175242.777 database connection re-established
+  2564:20151202:175242.778 Zabbix agent item "system.cpu.util[,steal]" on host "zabbix02.vmtest.local" failed: first network error, wait for 15 seconds
+  2562:20151202:175242.787 Zabbix agent item "net.if.out[enp0s3]" on host "zagresql02.vmtest.local" failed: first network error, wait for 15 seconds
+  2578:20151202:175245.813 database connection re-established
+  2579:20151202:175245.817 database connection re-established
+  2581:20151202:175245.818 database connection re-established
+  2577:20151202:175245.819 database connection re-established
+  2558:20151202:175245.822 database connection re-established
+  2566:20151202:175245.823 database connection re-established
+  2580:20151202:175245.823 database connection re-established
+  2568:20151202:175245.825 database connection re-established
+  2572:20151202:175245.829 database connection re-established
+  2565:20151202:175245.831 database connection re-established
+  2575:20151202:175245.833 database connection re-established
+  2567:20151202:175245.834 database connection re-established
+  2576:20151202:175245.836 database connection re-established
+  2574:20151202:175245.839 database connection re-established
+  2569:20151202:175245.840 database connection re-established
+  2565:20151202:175245.846 Zabbix agent item "system.cpu.util[,softirq]" on host "zabbix02.vmtest.local" failed: another network error, wait for 15 seconds
+  2565:20151202:175245.874 resuming Zabbix agent checks on host "zagresql02.vmtest.local": connection restored
+  2565:20151202:175245.880 resuming Zabbix agent checks on host "zabbix02.vmtest.local": connection restored
+  2565:20151202:175245.889 resuming Zabbix agent checks on host "zagresql01.vmtest.local": connection restored
+  2565:20151202:175245.898 resuming Zabbix agent checks on host "zabbix01.vmtest.local": connection restored
+  2573:20151202:175400.831 executing housekeeper
+  2573:20151202:175401.297 housekeeper [deleted 4953 hist/trends, 0 items, 0 events, 0 sessions, 0 alarms, 0 audit items in 0.433913 sec, idle 1 hour(s)]
+  2566:20151202:175503.985 [Z3005] query failed: [0] PGRES_FATAL_ERROR:server closed the connection unexpectedly
+        This probably means the server terminated abnormally
+        before or while processing the request.
+ [select hostid,status from hosts where host='zagresql02.vmtest.local' and status in (0,1) and flags<>2 and proxy_hostid is null]
+  2581:20151202:175504.083 [Z3005] query failed: [0] PGRES_FATAL_ERROR: [select escalationid,actionid,triggerid,eventid,r_eventid,nextcheck,esc_step,status,itemid from escalations order by actionid,triggerid,itemid,escalatio
+nid]
+  2575:20151202:175506.125 [Z3005] query failed: [0] PGRES_FATAL_ERROR: [select h.hostid,h.host,h.name,t.httptestid,t.name,t.variables,t.headers,t.agent,t.authentication,t.http_user,t.http_password,t.http_proxy,t.retries,t.s
+sl_cert_file,t.ssl_key_file,t.ssl_key_password,t.verify_peer,t.verify_host from httptest t,hosts h where t.hostid=h.hostid and t.nextcheck<=1449046506 and mod(t.httptestid,1)=0 and t.status=0 and h.proxy_hostid is null and h
+.status=0 and (h.maintenance_status=0 or h.maintenance_type=0)]
+  2577:20151202:175506.126 [Z3005] query failed: [0] PGRES_FATAL_ERROR: [begin;]
+  2579:20151202:175511.131 [Z3005] query failed: [0] PGRES_FATAL_ERROR: [begin;]
+  2572:20151202:175515.988 [Z3005] query failed: [0] PGRES_FATAL_ERROR: [select a.alertid,a.mediatypeid,a.sendto,a.subject,a.message,a.status,mt.mediatypeid,mt.type,mt.description,mt.smtp_server,mt.smtp_helo,mt.smtp_email,mt
+.exec_path,mt.gsm_modem,mt.username,mt.passwd,a.retries from alerts a,media_type mt where a.mediatypeid=mt.mediatypeid and a.status=0 and a.alerttype=0 order by a.alertid]
+  2578:20151202:175516.153 [Z3005] query failed: [0] PGRES_FATAL_ERROR: [begin;]
+  2580:20151202:175521.206 [Z3005] query failed: [0] PGRES_FATAL_ERROR: [begin;]
+  2574:20151202:175530.031 [Z3005] query failed: [0] PGRES_FATAL_ERROR: [begin;]
+  2570:20151202:175530.951 [Z3005] query failed: [0] PGRES_FATAL_ERROR: [select hostid,status from hosts where host='zabbix02.vmtest.local' and status in (0,1) and flags<>2 and proxy_hostid is null]
+  2576:20151202:175546.012 [Z3005] query failed: [0] PGRES_FATAL_ERROR: [select distinct r.druleid,r.iprange,r.name,c.dcheckid,r.proxy_hostid from drules r left join dchecks c on c.druleid=r.druleid and c.uniq=1 where r.stat
+us=0 and (r.nextcheck<=1449046546 or r.nextcheck>1449046546+r.delay) and mod(r.druleid,1)=0]
+  2558:20151202:175546.193 [Z3005] query failed: [0] PGRES_FATAL_ERROR: [select refresh_unsupported,discovery_groupid,snmptrap_logging,severity_name_0,severity_name_1,severity_name_2,severity_name_3,severity_name_4,severity_
+name_5,hk_events_mode,hk_events_trigger,hk_events_internal,hk_events_discovery,hk_events_autoreg,hk_services_mode,hk_services,hk_audit_mode,hk_audit,hk_sessions_mode,hk_sessions,hk_history_mode,hk_history_global,hk_history,h
+k_trends_mode,hk_trends_global,hk_trends from config]
+  2577:20151202:175606.174 [Z3005] query failed: [0] PGRES_FATAL_ERROR:ERROR:  cannot execute INSERT in a read-only transaction
+ [insert into history (itemid,clock,ns,value) values (23941,1449046501,884172108,99.924894),(23942,1449046502,885316433,0.008346),(23943,1449046503,888474025,0.000000),(23944,1449046504,890986163,0.100159),(23945,1449046505,
+892850389,0.000000);
+
+2015-12-02 17:56:06 JST [8147] ERROR:  cannot execute UPDATE in a read-only transaction
+2015-12-02 17:56:06 JST [8147] STATEMENT:  UPDATE sessions SET lastaccess=1449046566 WHERE userid='1' AND sessionid='fbfca0b381696a356c65d6d9bf876c24'
+2015-12-02 17:56:06 JST [8147] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2015-12-02 17:56:06 JST [8147] STATEMENT:  SELECT MAX(g.gui_access) AS gui_access FROM usrgrp g,users_groups ug WHERE ug.userid='1' AND g.usrgrpid=ug.usrgrpid
+2015-12-02 17:56:06 JST [8147] ERROR:  current transaction is aborted, commands ignored until end of transaction block
+2015-12-02 17:56:06 JST [8147] STATEMENT:  SELECT u.userid,u.alias,u.name,u.surname,u.url,u.autologin,u.autologout,u.lang,u.refresh,u.type, u.theme,u.attempt_failed,u.attempt_ip,u.attempt
+_clock,u.rows_per_page FROM users u WHERE u.userid='1'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+zagresql01
+
+zagresql02
+ /dbbkup/pgdata1/pg_arch/00000001000000000000007Aをずっと要求しているがzagresql01にはそんなファイルは存在しない
+
+2015-12-02 17:47:28 JST [7883] FATAL:  could not connect to the primary server: FATAL:  the database system is starting up
+
+scp: /dbbkup/pgdata1/pg_arch/00000001000000000000007A: No such file or directory
+2015-12-02 17:47:33 JST [7886] LOG:  started streaming WAL from primary at 0/7A000000 on timeline 1
+WARNING:  terminating connection because of crash of another server process
+DETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared mem
+ory.
+HINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2015-12-02 17:55:03 JST [7886] FATAL:  could not receive data from WAL stream: server closed the connection unexpectedly
+                This probably means the server terminated abnormally
+                before or while processing the request.
+
+scp: /dbbkup/pgdata1/pg_arch/00000001000000000000007A: No such file or directory
+2015-12-02 17:55:03 JST [1377] LOG:  invalid record length at 0/7A9C37F0
+2015-12-02 17:55:03 JST [7964] FATAL:  could not connect to the primary server: could not connect to server: Connection refused
+                Is the server running on host "192.168.0.164" and accepting
+                TCP/IP connections on port 5432?
+
+scp: /dbbkup/pgdata1/pg_arch/00000001000000000000007A: No such file or directory
+2015-12-02 17:55:08 JST [7983] FATAL:  could not connect to the primary server: could not connect to server: Connection refused
+                Is the server running on host "192.168.0.164" and accepting
+                TCP/IP connections on port 5432?
+
+scp: /dbbkup/pgdata1/pg_arch/00000001000000000000007A: No such file or directory
+2015-12-02 17:55:13 JST [7997] FATAL:  could not connect to the primary server: could not connect to server: Connection refused
+                Is the server running on host "192.168.0.164" and accepting
+                TCP/IP connections on port 5432?
+
+scp: /dbbkup/pgdata1/pg_arch/00000001000000000000007A: No such file or directory
+2015-12-02 17:55:19 JST [8012] FATAL:  could not connect to the primary server: could not connect to server: Connection refused
+                Is the server running on host "192.168.0.164" and accepting
+                TCP/IP connections on port 5432?
+
+scp: /dbbkup/pgdata1/pg_arch/00000001000000000000007A: No such file or directory
+2015-12-02 17:55:23 JST [8024] FATAL:  could not connect to the primary server: could not connect to server: Connection refused
+                Is the server running on host "192.168.0.164" and accepting
+                TCP/IP connections on port 5432?
+
+scp: /dbbkup/pgdata1/pg_arch/00000001000000000000007A: No such file or directory
+2015-12-02 17:55:28 JST [8038] FATAL:  could not connect to the primary server: could not connect to server: Connection refused
+                Is the server running on host "192.168.0.164" and accepting
+                TCP/IP connections on port 5432?
+
+scp: /dbbkup/pgdata1/pg_arch/00000001000000000000007A: No such file or directory
+2015-12-02 17:55:33 JST [8052] FATAL:  could not connect to the primary server: could not connect to server: Connection refused
+                Is the server running on host "192.168.0.164" and accepting
+                TCP/IP connections on port 5432?
+
+scp: /dbbkup/pgdata1/pg_arch/00000001000000000000007A: No such file or directory
+2015-12-02 17:55:38 JST [8066] FATAL:  could not connect to the primary server: could not connect to server: Connection refused
+                Is the server running on host "192.168.0.164" and accepting
+                TCP/IP connections on port 5432?
+
+scp: /dbbkup/pgdata1/pg_arch/00000001000000000000007A: No such file or directory
+2015-12-02 17:55:43 JST [8081] FATAL:  could not connect to the primary server: could not connect to server: Connection refused
+                Is the server running on host "192.168.0.164" and accepting
+                TCP/IP connections on port 5432?
+
+scp: /dbbkup/pgdata1/pg_arch/00000001000000000000007A: No such file or directory
+2015-12-02 17:55:48 JST [8094] FATAL:  could not connect to the primary server: could not connect to server: Connection refused
+                Is the server running on host "192.168.0.164" and accepting
+                TCP/IP connections on port 5432?
+
+scp: /dbbkup/pgdata1/pg_arch/00000001000000000000007A: No such file or directory
+2015-12-02 17:55:54 JST [8109] FATAL:  could not connect to the primary server: could not connect to server: Connection refused
+                Is the server running on host "192.168.0.164" and accepting
+                TCP/IP connections on port 5432?
+
+scp: /dbbkup/pgdata1/pg_arch/00000001000000000000007A: No such file or directory
+2015-12-02 17:55:58 JST [8121] FATAL:  could not connect to the primary server: could not connect to server: Connection refused
+                Is the server running on host "192.168.0.164" and accepting
+                TCP/IP connections on port 5432?
+
+scp: /dbbkup/pgdata1/pg_arch/00000001000000000000007A: No such file or directory
+2015-12-02 17:56:03 JST [8138] FATAL:  could not connect to the primary server: could not connect to server: Connection refused
+                Is the server running on host "192.168.0.164" and accepting
+                TCP/IP connections on port 5432?
+
+2015-12-02 17:56:06 JST [8145] ERROR:  cannot execute INSERT in a read-only transaction
+2015-12-02 17:56:06 JST [8145] STATEMENT:  insert into history (itemid,clock,ns,value) values (23941,1449046501,884172108,99.924894),(23942,1449046502,885316433,0.008346),(23943,144904650
+3,888474025,0.000000),(23944,1449046504,890986163,0.100159),(23945,1449046505,892850389,0.000000);
+
+2015-12-02 17:56:06 JST [8148] ERROR:  cannot execute INSERT in a read-only transaction
+2015-12-02 17:56:06 JST [8148] STATEMENT:  insert into history (itemid,clock,ns,value) values (23947,1449046507,894850467,99.999138),(23948,1449046508,896208122,99.357414),(23768,14490465
+08,898105686,100.000000),(23949,1449046509,898825290,2.821113),(23950,1449046510,899304752,93.933296),(24010,1449046510,899911378,100.000000),(23770,1449046510,901242305,99.557115);
+
+
+
+でもトランザクションログの最終位置は一致している
+zagresql01
+-bash-4.2$ psql -c "select pg_current_xlog_location()"
+ pg_current_xlog_location
+--------------------------
+ 0/7A9C4040
+(1 行)
+
+zagresql02
+-bash-4.2$ psql -c "select pg_last_xlog_receive_location()"
+ pg_last_xlog_receive_location
+-------------------------------
+ 0/7A9C4040
+(1 行)
+
+zagresql01から再度確認
+
+-bash-4.2$ psql -c "select * from pg_stat_replication"
+ pid  | usesysid | usename  | application_name |  client_addr  | client_hostname | client_port |         backend_start         | backend_xmin |   state   | sent_location | write_location | flush_location | replay_location | sync_priority
+ | sync_state
+------+----------+----------+------------------+---------------+-----------------+-------------+-------------------------------+--------------+-----------+---------------+----------------+----------------+-----------------+--------------
+-+------------
+ 9079 |       10 | postgres | walreceiver      | 192.168.0.165 |                 |       35185 | 2015-12-02 18:07:38.460949+09 |              | streaming | 0/7A9C4118    | 0/7A9C4118     | 0/7A9C4118     | 0/7A9C4118      |             1
+ | sync
+(1 行)
+
+
+
+
+
+2015-12-03 11:34:09: pid 1998: DETAIL:  escalating to master pgpool
+/usr/sbin/ifcfg: 行 18: killall: コマンドが見つかりません
+
+
+
+
+
+
+
+
+

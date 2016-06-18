@@ -1,0 +1,54 @@
+
+前提：rbenv等のインストールが完了していること
+
+gem install serverspec
+gem install ci_reporter  削除　gem uninstall ci_reporter
+gem install rspec_junit_formatter
+gem install highline
+cd /opt
+mkdir serverspec
+cd serverspec
+serverspec-init
+
+
+serverspecの実行ユーザは公開鍵認証にするのとsudoはnopasswdにする
+ssh-keygen
+scp .ssh/id_rsa.pub postgresql1:/home/glassfish/.ssh/id_rsa.pub
+vi .ssh/config
+	Host postgresql1
+    HostName postgresql1.vmtest.local
+    Port 22
+    User glassfish
+    IdentityFile ~/.ssh/id_rsa
+
+chmod 600 .ssh/config
+
+対向にログインして
+echo "glassfish        ALL=(ALL)      NOPASSWD: ALL">/etc/sudoers.d/glassfish
+cd .ssh/
+mv id_rsa.pub authorized_keys
+chmod 600 authorized_keys
+cd ..
+chmod 700 .ssh
+
+vi /etc/ssh/ssh_config
+	RSAAuthentication yes　を有効にする
+
+service sshd restart
+
+
+
+後はserverspecの設定
+spec_helper.rbを編集し鍵やアカウントを実行時に指定できるようにする
+	options[:keys] = ENV['KEY'];
+	#options[:user] ||= Etc.getlogin
+	options[:user] = ENV['USER'] || Etc.getlogin
+
+後はJenkinsのシェル実行部分で
+export USER=glassfish
+/usr/local/src/rbenv/shims/rake CI_FLAG=true spec:postgresql1.vmtest.local
+
+http://qiita.com/minamijoyo/items/467ddd13c0cab15330bf
+gemでインストールしたもののバージョン確認とかも出来る
+
+

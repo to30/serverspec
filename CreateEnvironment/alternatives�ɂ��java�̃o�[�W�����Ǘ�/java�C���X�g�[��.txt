@@ -1,0 +1,516 @@
+
+
+ライセンス規約に同意後、ダウンロードリンクをコピーしておきます
+
+
+次のようなライセンス同意チェックの Cookie を添えてやります。
+"Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie"
+
+curl -OL --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u55-b13/jdk-7u55-linux-i586.tar.gz
+
+
+curl -OL --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u91-b14/jdk-8u91-linux-x64.rpm
+
+
+
+
+-O で URL の末尾ファイル名を使って保存します。
+-L でリダイレクトに追従します。
+--header でお馴染みの Cookie を渡します。
+
+rpm -ihv /root/jdk-7u79-linux-x64.rpm
+
+java -version
+
+ls -ltr /usr/java/jdk1.7.0_79
+
+
+alternativesに登録
+# alternatives --install /usr/bin/java java /usr/java/jdk1.7.0_79/bin/java 1
+# alternatives --install /usr/bin/java java /usr/java/jdk1.8.0_91/bin/java 2
+# alternatives --config java
+
+JAVA_HOMEの設定
+
+# alternatives --install /usr/local/java_home java_home /usr/java/jdk1.7.0_79 1
+# alternatives --install /usr/local/java_home java_home /usr/java/jdk1.8.0_91 2
+
+# alternatives --config java_home
+
+Es gibt 2 Programme, welche 'java_home' zur Verf?gung stellen.
+
+  Auswahl    Befehl
+-----------------------------------------------
+*+ 1           /opt/jdk1.7.0_79
+   2           /opt/jdk1.8.0_45
+
+...
+
+/etc/profile.d/に登録しておけば JAVA_HOME の切り替えも簡単になります。
+# echo 'export JAVA_HOME=/usr/local/java_home' >> /etc/profile.d/jdk.sh
+
+
+以下参考
+############################################################
+
+
+alternativesに登録しておくことで簡単にバージョンを切り替える事ができます。
+登録には--installのコマンドを使用しますが、
+オプションは[作成するリンクパス] [管理名] [実体のパス] [優先度]です。
+
+Java7の優先度を 1、Java8の優先度を 2 で登録します。
+# alternatives --install /usr/bin/java java /usr/java/jdk1.7.0_79/bin/java 1
+
+# alternatives --config java
+
+There is 2 program that provides 'java'.
+
+  Selection    Command
+-----------------------------------------------
+   1           /opt/jdk1.7.0_79/bin/java
+** 2           /opt/jdk1.8.0_45/bin/java
+Enter to keep the current selection[+], or type selection number:
+
+デフォルトでは後に登録された方が有効になります。
+# java -version
+java version "1.8.0_45"
+Java(TM) SE Runtime Environment (build 1.8.0_45-b14)
+Java HotSpot(TM) 64-Bit Server VM (build 25.45-b02, mixed mode)
+
+シンボリックリンクの流れ
+
+alternativesの情報は/var/lib/alternatives/以下に保存されます。
+# cat /var/lib/alternatives/java
+manual
+/usr/bin/java
+
+/opt/jdk1.7.0_79/bin/java
+1
+/opt/jdk1.8.0_45/bin/java
+2
+
+/etc/alternatives/以下に上記と同名のシンボリックリンクが作成されます。
+# ls -l /etc/alternatives/java
+lrwxrwxrwx 1 root root 25 May 24 15:14 /etc/alternatives/java -> /opt/jdk1.8.0_45/bin/java
+
+実際に使用するコマンドは上記の/etc/alternatives/javaを指しています。
+# which java
+/usr/bin/java
+# ls -l /usr/bin/java
+lrwxrwxrwx 1 root root 22 May 24 15:14 /usr/bin/java -> /etc/alternatives/java
+
+
+
+バージョンの切り替え
+
+--configを使用すると対話形式で選択することが出来ます。
+# alternatives --config java
+
+There is 2 program that provides 'java'.
+
+  Auswahl    Befehl
+-----------------------------------------------
+   1           /opt/jdk1.7.0_79/bin/java
+*+  2           /opt/jdk1.8.0_45/bin/java
+
+Eingabe um die vorgegebene Auswahl[+] zu behalten oder geben Sie die Nummer an:1
+
+Java7に変わりました。
+# java -version
+java version "1.7.0_79"
+Java(TM) SE Runtime Environment (build 1.7.0_79-b15)
+Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)
+
+シンボリックリンクも変わってます。
+# ls -l /etc/alternatives/java
+lrwxrwxrwx 1 root root 25 May 25 14:18 /etc/alternatives/java -> /opt/jdk1.7.0_79/bin/java
+
+--displayオプションではインストール済みのJavaや、ステータス、優先度などが確認できます。
+# alternatives --display java
+java - status is manual.
+ link currently points to /opt/jdk1.7.0_79/bin/java
+/opt/jdk1.8.0_45/bin/java - priority 2
+/opt/jdk1.7.0_79/bin/java - priority 1
+Current `best' version is /opt/jdk1.8.0_45/bin/java.
+
+ステータスが manual の場合は、手動で使用するバージョンを選択する必要があります。
+もうひとつ auto というステータスがありますが、auto の場合は優先度（priority）の高い方が選択されます。
+
+auto に切り替えるには--autoオプションを使用します。
+# alternatives --auto java
+
+優先度（priority）の高い Java8 が選択されました。
+# java -version
+java version "1.8.0_45"
+Java(TM) SE Runtime Environment (build 1.8.0_45-b14)
+Java HotSpot(TM) 64-Bit Server VM (build 25.45-b02, mixed mode)
+
+ステータスも auto に切り替わってます。
+# alternatives --display java
+java - Status ist automatisch.
+ Link verweist auf /opt/jdk1.8.0_45/bin/java
+...
+
+--setオプションを使用すると非対話形式で変更できます。
+# alternatives --set java /opt/jdk1.8.0_45/bin/java
+
+ステータスを auto から manual に戻したい場合は、--configか--setでバージョンを変えると自動で manual に戻ります。
+
+alternativesから除外
+
+alternativesの管理から除外したい場合は--removeを使用します。
+# alternatives --remove java /opt/jdk1.7.0_79/bin/java
+
+JAVA_HOMEの設定
+
+コマンドだけではなく JAVA_HOME にも当然使用できます。むしろこっちの方が利用頻度高いですね。
+# alternatives --install /usr/local/java_home java_home /usr/java/jdk1.7.0_79 1
+# alternatives --install /usr/local/java_home java_home /opt/jdk1.8.0_45 2
+# alternatives --config java_home
+
+Es gibt 2 Programme, welche 'java_home' zur Verf?gung stellen.
+
+  Auswahl    Befehl
+-----------------------------------------------
+   1           /opt/jdk1.7.0_79
+*+ 2           /opt/jdk1.8.0_45
+
+...
+
+# /usr/local/java_home/bin/java -version
+java version "1.8.0_45"
+Java(TM) SE Runtime Environment (build 1.8.0_45-b14)
+Java HotSpot(TM) 64-Bit Server VM (build 25.45-b02, mixed mode)
+
+/etc/profile.d/に登録しておけば JAVA_HOME の切り替えも簡単になります。
+# echo 'export JAVA_HOME=/usr/local/java_home' >> /etc/profile.d/jdk.sh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+alternatives は、同時にインストールされた、同機能を提供するソフトや、 
+バージョンの異なるソフトを管理するためのユーティリティです。 
+
+具体的には、ユーザが実際に使用するコマンド等はシンボリックリンクになっており、 
+そのシンボリックリンクの指す実体を切替えたり、候補一覧を出力したり、 といったことを行います。 
+
+もともとは、Debian の dpkg ユーティリティの機能のひとつでしたが、 現在では、RedHat 系のディストリビューションにも入っています。
+(Fedora, CentOS などでは chkconfig パッケージに含まれますが、 Vine では alternatives という独立したパッケージになっています。) 
+
+まずは、alternatives の管理下にあるモノを、調べてみましょう。 
+
+alternatives の情報は、以下のディレクトリに格納されています。 
+  Debian系: /var/lib/dpkg/alternatives
+  Fedora,CentOS: /var/lib/alternatives
+  Vine: /var/lib/rpm/alternatives
+
+
+上記ディレクトリを参照することで、 alternatives を利用しているモノの名前を確認できます。 (以下は、CentOS 4.7 の実行例です。) 
+  % ls /var/lib/alternatives
+  etags      mta           xinput-gu_IN  xinput-ko_KR  xinput-te_IN
+  java       print         xinput-hi_IN  xinput-ml_IN  xinput-zh_CN
+  jre_1.4.2  xinput-bn_BD  xinput-ja_JP  xinput-pa_IN  xinput-zh_TW
+  jre_gcj    xinput-bn_IN  xinput-kn_IN  xinput-ta_IN
+
+
+そして、/etc/alternatives 以下に、上記と同名のシンボリックリンクがあります。 たとえば、mta は、以下のようになっています。 
+  % ls -l /etc/alternatives/mta
+  lrwxrwxrwx 1 root root 21 Oct 17 18:59 /etc/alternatives/mta -> /usr/sbin/sendmail.sendmail
+
+
+かたや、ユーザが使用する /usr/sbin/sendmail もシンボリックリンクになっており、 /etc/alternatives/mta を指しています。 
+  % ls -l /usr/sbin/sendmail
+  lrwxrwxrwx 1 root root 21 Oct 17 18:59 /usr/sbin/sendmail -> \
+  /etc/alternatives/mta
+
+
+よって、/etc/alternatives/mta の指す実体を切替えると、 sendmail の実体も切り替わる、という寸法です。 
+
+
+さて、各種操作を行ったり情報を見たりするには、 update-alternatives というコマンドを使用します。 
+
+まずは、状態を確認してみましょう。それには、 --display オプションをつけて update-alternatives を実行します。 
+  update-alternatives --display 名前
+
+
+たとえば、mta の内訳を知るには、以下のように実行します。 
+  # update-alternatives --display mta
+  mta - status is auto.
+   link currently points to /usr/sbin/sendmail.sendmail
+  /usr/sbin/sendmail.sendmail - priority 90
+   slave mta-pam: /etc/pam.d/smtp.sendmail
+   slave mta-mailq: /usr/bin/mailq.sendmail
+  ...中略...
+  /usr/sbin/sendmail.postfix - priority 30
+   slave mta-pam: /etc/pam.d/smtp.postfix
+   slave mta-mailq: /usr/bin/mailq.postfix
+  ...中略...
+  Current 'best' version is /usr/sbin/sendmail.sendmail.
+
+
+いまは、auto という状態になっています。
+そして、/usr/sbin/sendmail.sendmail と /usr/sbin/sendmail.postfix という選択候補がありますが、 現在は /usr/sbin/sendmail.sendmail が選択されていることがわかります。
+(先ほど /etc/alternatives/mta を ls -l した結果と一致しますね。) 
+
+それぞれの選択候補には priority があり、sendmail.sendmail が 90 で、 sendmail.postfix が 30 です。
+ちなみに、状態が auto ですと、priority の高いほうが選択されます。 
+
+また、mta-pam や mta-mailq などといった、 mta に付随する(スレーブ)ものがあることもわかります。 
+  % ls -l /etc/alternatives/mta-pam
+  lrwxrwxrwx 1 root root 23 Oct 17 18:59 /etc/alternatives/mta-pam -> /etc/pam.d/smtp.sendmail
+  % ls -l /etc/pam.d/smtp
+  lrwxrwxrwx 1 root root 25 Oct 17 18:59 /etc/pam.d/smtp -> /etc/alternatives/mta-pam
+
+
+これらは、mta を切替えたとき、同時に切り替わってくれます。 
+
+ 
+
+ちなみに、--list オプションを用いますと、簡潔な出力結果が得られるのですが、 ディストリビューションによっては対応していません。 
+  % update-alternatives --list gcc
+  /usr/bin/gcc-3.3.6
+  /usr/bin/gcc-4.0.2
+
+
+
+それでは、実際に切替えてみましょう。
+ 対話形式で切替えるには、--config オプションを用います。 
+  update-alternatives --config 名前
+
+
+たとえば、mta を、sendmail.postfix に切替えてみましょう。 
+  # update-alternatives --config mta
+
+  There are 2 programs which provide 'mta'.
+
+    Selection    Command
+  -----------------------------------------------
+  *+ 1           /usr/sbin/sendmail.sendmail
+     2           /usr/sbin/sendmail.postfix
+
+  Enter to keep the current selection[+]. or type selection numer:
+
+
+…と出力され、入力を促されますので、2 を選択してください。
+ 特に文句を言われなければ、切り替わったことを確認します。 
+  # update-alternatives --display mta
+  mta - status is manual.
+   link currently points to /usr/sbin/sendmail.postfix
+  ...後略...
+
+
+priority の低い方を選択しましたので、状態が manual になります。
+そして、sendmail.postfix が選択されていることがわかります。
+もちろん、各シンボリックリンクの実体も切り替わっています。 
+  # ls -l /etc/alternatives/mta
+  lrwxrwxrwx 1 root root 21 Jan 10 17:28 /etc/alternatives/mta -> /usr/sbin/sendmail.postfix
+  # ls -l /etc/alternatives/mta-pam
+  lrwxrwxrwx 1 root root 23 Jan 10 17:28 /etc/alternatives/mta-pam -> /etc/pam.d/smtp.postfix
+  ...後略...
+
+
+ 
+
+非対話形式で切替えるには、--set オプションを使用します。 
+  update-alternatives --set 名前 パス
+
+
+たとえば、mta を sendmail.postfix に切替えるには、以下のように実行します。 
+  # update-alternatives --set mta /usr/sbin/sendmail.postfix
+
+
+ 
+
+また、デフォルトの状態に戻すには、--auto オプションを使用します。 
+  update-alternatives --auto 名前
+
+
+たとえば、mta をデフォルトに戻すには、以下のように実行します。 
+  # update-alternatives --auto mta
+
+
+すると、priority の高い sendmail.sendmail が選択され、状態が auto になります。 
+  # update-alternatives --display mta
+  mta - status is auto.
+   link currently points to /usr/sbin/sendmail.sendmail
+  ...後略...
+
+
+ 
+
+ちなみに、--all オプションを使用しますと、対話形式ですべての選択を促されます。 (…が、使う状況が想像できませんので、割愛します。) 
+
+さらにちなみに、お察しの通り、切替えるには root の権限が必要です。 
+
+
+以上、alternatives の使いかたを、超簡単にご紹介しました。 
+
+そもそも alternatives に対応している必要がありますが、対応さえしていれば、 切替えはとても簡単です。 
+
+たいていの Linux マシンであれば、alternatives は必ず入っているはずですので、 update-alternatives --display くらいは試してみましょう。
+あわよくば、かちあうソフトをインストールして、 切替えて使えることを確認しておくと、なにかの糧になってよいと思います。 
+
+宿題の答え
+
+前回の宿題は、 
+  プライマリサーバで、シリアル番号を更新せずに情報を変更した場合、
+  セカンダリサーバの情報がどうなるか確認しましょう。
+
+
+でした。 
+
+予想通りの結果になりますが、そうなることを、実際に確認してみたいと思います。 
+
+構成は、前回と同様、プライマリサーバが BIND で、セカンダリサーバが NSD、 対象のゾーンを kuri.info と仮定して、話を進めます。 
+
+ 
+
+まずは、シリアル番号を更新して、双方で更新されることを確認します。
+プライマリサーバ上の、kuri.info のシリアル番号を増やします。 
+  @ IN SOA ns1.kuri.info. postmaster.kuri.info. (
+      2000011001 10800 3600 604800 86400)   ; シリアル番号を更新!
+
+
+更新を BIND に知らせます。 
+  # /etc/init.d/named reload
+
+
+セカンダリサーバが notify に気づいて更新したことを、syslog を見て確認します。 
+  # tail /var/log/messages
+  ...中略...
+  年月日 マシン名 nsd[PID]: Zone kuri.info serial 2008120701 is updated to 2009011001.
+
+
+ 
+
+…とまあ、ここまでは、前回のお話です。
+さて、今度は、シリアル番号を変更せず、エントリだけ追加してみます。 
+  @ IN SOA ns1.kuri.info. postmaster.kuri.info. (
+      2000011001 10800 3600 604800 86400)   ; シリアル番号は据置き
+  ...中略...
+  usohost2   IN   A      192.168.1.253      ; ダミーを追加
+
+
+更新(シリアル番号は据置きですが)を BIND に知らせます。 
+  # /etc/init.d/named reload
+
+
+セカンダリサーバの syslog を確認しますと… 
+  # tail /var/log/messages
+  ...中略...
+  年月日 マシン名 nsd[PID]: Zone kuri.info serial 2008120701 is updated to 2009011001.
+
+
+新たなログは、何も出力されていません。
+もちろん、追加した usohost2 の情報は、影も形もありません。 
+  # dig @localhost usohost2.kuri.info.
+  ...中略...
+  ;; QUESTION SECTION:
+  ;usohost2.kuri.info.            IN      A
+
+  ;; AUTHORITY SECTION:
+  kuri.info.              86400   IN      SOA     dns.kuri.info. postmaster.kuri.info. 2009011001 10800 3600 604800 86400
+  ...後略...
+
+
+念のため、NSD を再起動しても、更新の気配すら感じられません。 
+  # /etc/init.d/nsd restart
+  # tail /var/log/messages
+  ...中略...
+  年月日 マシン名 nsd[PID]: signal received, shutting down...
+  年月日 マシン名 nsd[PID]: nsd started (NSD 3.1.1), pid PID
+
+
+ 
+
+というわけで、更新する際には、必ずシリアル番号を増やしましょう、 という簡単な宿題でした。 
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

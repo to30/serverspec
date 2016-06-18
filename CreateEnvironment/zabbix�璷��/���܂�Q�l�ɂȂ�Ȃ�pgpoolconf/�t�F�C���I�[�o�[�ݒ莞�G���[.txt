@@ -1,0 +1,23 @@
+◆pgpool.confでスタンバイサーバの情報をコメントアウトした場合のログ（backend_hostname等）
+
+2014-09-25 23:49:47 DEBUG: pid 16657: s_do_auth: auth kind: 0
+2014-09-25 23:49:47 ERROR: pid 16657: pool_read: EOF encountered with backend
+2014-09-25 23:49:47 ERROR: pid 16657: s_do_auth: error while reading message kind
+2014-09-25 23:49:47 ERROR: pid 16657: make_persistent_db_connection: s_do_auth failed
+2014-09-25 23:49:57 DEBUG: pid 16657: s_do_auth: auth kind: 0
+2014-09-25 23:49:57 ERROR: pid 16657: pool_read: EOF encountered with backend
+2014-09-25 23:49:57 ERROR: pid 16657: s_do_auth: error while reading message kind
+2014-09-25 23:49:57 ERROR: pid 16657: make_persistent_db_connection: s_do_auth failed
+「
+◆pgpool.confでスタンバイサーバの情報も記載した場合のログ（backend_hostname等）
+
+2014-09-25 23:44:41 DEBUG: pid 16531: s_do_auth: auth kind: 0
+2014-09-25 23:44:41 ERROR: pid 16531: pool_read: EOF encountered with backend
+2014-09-25 23:44:41 ERROR: pid 16531: s_do_auth: error while reading message kind
+2014-09-25 23:44:41 ERROR: pid 16531: make_persistent_db_connection: s_do_auth failed
+2014-09-25 23:44:41 ERROR: pid 16531: s_do_auth: expecting R got E
+2014-09-25 23:44:41 ERROR: pid 16531: make_persistent_db_connection: s_do_auth failed
+2014-09-25 23:44:41 DEBUG: pid 16531: check_replication_time_lag: DB node is valid but no persistent connection
+2014-09-25 23:44:41 ERROR: pid 16531: check_replication_time_lag: could not connect to DB node 0, check sr_check_user and sr_check_password
+
+

@@ -1,0 +1,39 @@
+
+
+yum install -y gcc-c++ make readline-devel zlib-devel
+
+リポジトリ追加
+rpm -ivh http://yum.postgresql.org/9.2/redhat/rhel-5-x86_64/pgdg-centos92-9.2-7.noarch.rpm
+
+vi /etc/yum.repos.d/CentOS-Base.repo
+#####[base]の末尾に下記を追加しbaseリポジトリのpostgresqlを利用しないようにする
+exclude=postgresql*
+#####
+
+yum search postgresql
+
+今回はクライアントとpgbenchを使ので
+yum install postgresql postgresql-contrib
+
+
+pgbench -h (pgpoolのホスト) -p (pgpool.confのport) -U (ユーザ名) (上のコマンドで指定したデータベース名)
+
+pgbench -h 192.168.0.118 -p 9999 -U repl_user testdb
+
+[root@jenkins ~]# pgbench -h 192.168.0.118 -p 9999 -U repl_user testdb
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 1
+query mode: simple
+number of clients: 1
+number of threads: 1
+number of transactions per client: 10
+number of transactions actually processed: 10/10
+tps = 92.741150 (including connections establishing)
+tps = 96.749226 (excluding connections establishing)
+[root@jenkins ~]#
+
+
+
+
+

@@ -1,0 +1,783 @@
+  2028:20151201:095449.174 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2028:20151201:095449.174 database is down: reconnecting in 10 seconds
+  2028:20151201:095450.504 Got signal [signal:15(SIGTERM),sender_pid:1,sender_uid:0,reason:0]. Exiting ...
+  2028:20151201:095455.510 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2028:20151201:095455.510 Cannot connect to the database. Exiting...
+  2073:20151201:095455.536 Starting Zabbix Server. Zabbix 2.4.7 (revision 56694).
+  2073:20151201:095455.536 ****** Enabled features ******
+  2073:20151201:095455.537 SNMP monitoring:           YES
+  2073:20151201:095455.537 IPMI monitoring:           YES
+  2073:20151201:095455.537 WEB monitoring:            YES
+  2073:20151201:095455.537 VMware monitoring:         YES
+  2073:20151201:095455.537 Jabber notifications:      YES
+  2073:20151201:095455.537 Ez Texting notifications:  YES
+  2073:20151201:095455.537 ODBC:                      YES
+  2073:20151201:095455.537 SSH2 support:              YES
+  2073:20151201:095455.537 IPv6 support:              YES
+  2073:20151201:095455.537 ******************************
+  2073:20151201:095455.537 using configuration file: /etc/zabbix/zabbix_server.conf
+  2073:20151201:095458.516 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095458.516 database is down: reconnecting in 10 seconds
+  2073:20151201:095511.522 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095511.522 database is down: reconnecting in 10 seconds
+  2073:20151201:095524.530 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095524.530 database is down: reconnecting in 10 seconds
+  2073:20151201:095537.538 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095537.538 database is down: reconnecting in 10 seconds
+  2073:20151201:095550.546 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095550.546 database is down: reconnecting in 10 seconds
+  2073:20151201:095600.723 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095600.723 database is down: reconnecting in 10 seconds
+  2073:20151201:095613.730 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095613.730 database is down: reconnecting in 10 seconds
+  2073:20151201:095626.738 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095626.738 database is down: reconnecting in 10 seconds
+  2073:20151201:095639.746 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095639.746 database is down: reconnecting in 10 seconds
+  2073:20151201:095652.754 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095652.755 database is down: reconnecting in 10 seconds
+  2073:20151201:095702.962 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095702.963 database is down: reconnecting in 10 seconds
+  2073:20151201:095715.970 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095715.970 database is down: reconnecting in 10 seconds
+  2073:20151201:095728.978 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095728.978 database is down: reconnecting in 10 seconds
+  2073:20151201:095739.170 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095739.170 database is down: reconnecting in 10 seconds
+  2073:20151201:095752.178 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095752.178 database is down: reconnecting in 10 seconds
+  2073:20151201:095805.186 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095805.186 database is down: reconnecting in 10 seconds
+  2073:20151201:095818.194 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2073:20151201:095818.194 database is down: reconnecting in 10 seconds
+  2073:20151201:095828.925 Got signal [signal:15(SIGTERM),sender_pid:1,sender_uid:0,reason:0]. Exiting ...
+  2073:20151201:095831.427 database connection re-established
+  2073:20151201:095831.427 syncing history data...
+  2073:20151201:095831.427 syncing history data done
+  2073:20151201:095831.427 syncing trends data...
+  2073:20151201:095831.429 syncing trends data done
+  2073:20151201:095831.429 Zabbix Server stopped. Zabbix 2.4.7 (revision 56694).
+  2150:20151201:095831.447 Starting Zabbix Server. Zabbix 2.4.7 (revision 56694).
+  2150:20151201:095831.447 ****** Enabled features ******
+  2150:20151201:095831.447 SNMP monitoring:           YES
+  2150:20151201:095831.447 IPMI monitoring:           YES
+  2150:20151201:095831.447 WEB monitoring:            YES
+  2150:20151201:095831.447 VMware monitoring:         YES
+  2150:20151201:095831.447 Jabber notifications:      YES
+  2150:20151201:095831.447 Ez Texting notifications:  YES
+  2150:20151201:095831.447 ODBC:                      YES
+  2150:20151201:095831.447 SSH2 support:              YES
+  2150:20151201:095831.447 IPv6 support:              YES
+  2150:20151201:095831.447 ******************************
+  2150:20151201:095831.447 using configuration file: /etc/zabbix/zabbix_server.conf
+  2150:20151201:095831.469 current database version (mandatory/optional): 02040000/02040000
+  2150:20151201:095831.469 required mandatory version: 02040000
+  2150:20151201:095831.534 server #0 started [main process]
+  2151:20151201:095831.534 server #1 started [configuration syncer #1]
+  2153:20151201:095831.534 server #3 started [poller #1]
+  2171:20151201:095831.540 server #21 started [history syncer #2]
+  2154:20151201:095831.540 server #4 started [poller #2]
+  2162:20151201:095831.543 server #12 started [trapper #4]
+  2165:20151201:095831.543 server #15 started [alerter #1]
+  2156:20151201:095831.543 server #6 started [poller #4]
+  2158:20151201:095831.544 server #8 started [unreachable poller #1]
+  2159:20151201:095831.546 server #9 started [trapper #1]
+  2166:20151201:095831.546 server #16 started [housekeeper #1]
+  2167:20151201:095831.547 server #17 started [timer #1]
+  2160:20151201:095831.547 server #10 started [trapper #2]
+  2152:20151201:095831.547 server #2 started [db watchdog #1]
+  2176:20151201:095831.548 server #26 started [self-monitoring #1]
+  2170:20151201:095831.548 server #20 started [history syncer #1]
+  2161:20151201:095831.548 server #11 started [trapper #3]
+  2163:20151201:095831.549 server #13 started [trapper #5]
+  2164:20151201:095831.549 server #14 started [icmp pinger #1]
+  2155:20151201:095831.550 server #5 started [poller #3]
+  2157:20151201:095831.552 server #7 started [poller #5]
+  2168:20151201:095831.553 server #18 started [http poller #1]
+  2174:20151201:095831.554 server #24 started [escalator #1]
+  2172:20151201:095831.554 server #22 started [history syncer #3]
+  2175:20151201:095831.555 server #25 started [proxy poller #1]
+  2173:20151201:095831.556 server #23 started [history syncer #4]
+  2169:20151201:095831.680 server #19 started [discoverer #1]
+  2150:20151201:095851.205 Got signal [signal:15(SIGTERM),sender_pid:1,sender_uid:0,reason:0]. Exiting ...
+  2150:20151201:095853.213 syncing history data...
+  2150:20151201:095853.213 syncing history data done
+  2150:20151201:095853.213 syncing trends data...
+  2150:20151201:095853.216 syncing trends data done
+  2150:20151201:095853.217 Zabbix Server stopped. Zabbix 2.4.7 (revision 56694).
+  2184:20151201:095853.245 Starting Zabbix Server. Zabbix 2.4.7 (revision 56694).
+  2184:20151201:095853.245 ****** Enabled features ******
+  2184:20151201:095853.245 SNMP monitoring:           YES
+  2184:20151201:095853.245 IPMI monitoring:           YES
+  2184:20151201:095853.245 WEB monitoring:            YES
+  2184:20151201:095853.245 VMware monitoring:         YES
+  2184:20151201:095853.245 Jabber notifications:      YES
+  2184:20151201:095853.245 Ez Texting notifications:  YES
+  2184:20151201:095853.245 ODBC:                      YES
+  2184:20151201:095853.245 SSH2 support:              YES
+  2184:20151201:095853.245 IPv6 support:              YES
+  2184:20151201:095853.245 ******************************
+  2184:20151201:095853.245 using configuration file: /etc/zabbix/zabbix_server.conf
+  2184:20151201:095853.280 current database version (mandatory/optional): 02040000/02040000
+  2184:20151201:095853.280 required mandatory version: 02040000
+  2184:20151201:095853.331 server #0 started [main process]
+  2185:20151201:095853.332 server #1 started [configuration syncer #1]
+  2186:20151201:095853.332 server #2 started [db watchdog #1]
+  2187:20151201:095853.332 server #3 started [poller #1]
+  2210:20151201:095853.337 server #26 started [self-monitoring #1]
+  2204:20151201:095853.337 server #20 started [history syncer #1]
+  2196:20151201:095853.338 server #12 started [trapper #4]
+  2198:20151201:095853.338 server #14 started [icmp pinger #1]
+  2188:20151201:095853.338 server #4 started [poller #2]
+  2189:20151201:095853.343 server #5 started [poller #3]
+  2192:20151201:095853.350 server #8 started [unreachable poller #1]
+  2190:20151201:095853.355 server #6 started [poller #4]
+  2200:20151201:095853.361 server #16 started [housekeeper #1]
+  2201:20151201:095853.361 server #17 started [timer #1]
+  2209:20151201:095853.365 server #25 started [proxy poller #1]
+  2195:20151201:095853.366 server #11 started [trapper #3]
+  2197:20151201:095853.366 server #13 started [trapper #5]
+  2191:20151201:095853.366 server #7 started [poller #5]
+  2203:20151201:095853.376 server #19 started [discoverer #1]
+  2208:20151201:095853.376 server #24 started [escalator #1]
+  2194:20151201:095853.376 server #10 started [trapper #2]
+  2206:20151201:095853.377 server #22 started [history syncer #3]
+  2199:20151201:095853.380 server #15 started [alerter #1]
+  2202:20151201:095853.381 server #18 started [http poller #1]
+  2207:20151201:095853.381 server #23 started [history syncer #4]
+  2193:20151201:095853.381 server #9 started [trapper #1]
+  2205:20151201:095853.382 server #21 started [history syncer #2]
+  2200:20151201:102854.533 executing housekeeper
+  2204:20151201:110013.579 [Z3005] query failed: [0] PGRES_FATAL_ERROR:ERROR:  duplicate key value violates unique constraint "trends_pkey"
+DETAIL:  Key (itemid, clock)=(23948, 1448931600) already exists.
+ [insert into trends (itemid,clock,num,value_min,value_avg,value_max) values (23948,1448931600,60,99.693108,99.693387,99.709892),(23952,1448931600,60,0.216480,6.836826,7.768381);
+]
+  2204:20151201:110023.599 [Z3005] query failed: [0] PGRES_FATAL_ERROR:ERROR:  duplicate key value violates unique constraint "trends_pkey"
+DETAIL:  Key (itemid, clock)=(24018, 1448931600) already exists.
+ [insert into trends (itemid,clock,num,value_min,value_avg,value_max) values (24018,1448931600,60,99.996553,99.998262,100.000000),(23962,1448931600,60,0.000000,50.779133,100.000000),(24022,1448931600,60,99.477839,99.523925,99.701486);
+]
+  2204:20151201:110028.618 [Z3005] query failed: [0] PGRES_FATAL_ERROR:ERROR:  duplicate key value violates unique constraint "trends_pkey"
+DETAIL:  Key (itemid, clock)=(23963, 1448931600) already exists.
+ [insert into trends (itemid,clock,num,value_min,value_avg,value_max) values (23963,1448931600,60,50.762195,99.179370,100.000000),(24027,1448931600,60,80.000000,80.000113,80.003385),(23967,1448931600,60,0.000000,0.000000,0.000000);
+]
+  2206:20151201:110033.620 [Z3005] query failed: [0] PGRES_FATAL_ERROR:ERROR:  duplicate key value violates unique constraint "trends_pkey"
+DETAIL:  Key (itemid, clock)=(24028, 1448931600) already exists.
+ [insert into trends (itemid,clock,num,value_min,value_avg,value_max) values (24028,1448931600,60,100.000000,100.000000,100.000000),(23968,1448931600,60,0.000000,0.000000,0.000000),(24032,1448931600,60,50.016926,50.036474,50.071997),(23972,1448931600,60,0.000000,0.009595,0.016941);
+]
+  2204:20151201:110038.630 [Z3005] query failed: [0] PGRES_FATAL_ERROR:ERROR:  duplicate key value violates unique constraint "trends_pkey"
+DETAIL:  Key (itemid, clock)=(24033, 1448931600) already exists.
+ [insert into trends (itemid,clock,num,value_min,value_avg,value_max) values (24033,1448931600,60,0.000000,51.089841,100.000000),(24034,1448931600,60,69.410569,99.490176,100.000000),(24035,1448931600,60,71.189024,99.519817,100.000000),(24036,1448931600,60,0.000000,0.000282,0.016923);
+]
+  2206:20151201:110043.639 [Z3005] query failed: [0] PGRES_FATAL_ERROR:ERROR:  duplicate key value violates unique constraint "trends_pkey"
+DETAIL:  Key (itemid, clock)=(24038, 1448931600) already exists.
+ [insert into trends (itemid,clock,num,value_min,value_avg,value_max) values (24038,1448931600,60,0.000000,0.000000,0.000000),(24042,1448931600,60,0.016920,0.025116,0.050813);
+]
+  2204:20151201:110048.644 [Z3005] query failed: [0] PGRES_FATAL_ERROR:ERROR:  duplicate key value violates unique constraint "trends_pkey"
+DETAIL:  Key (itemid, clock)=(24043, 1448931600) already exists.
+ [insert into trends (itemid,clock,num,value_min,value_avg,value_max) values (24043,1448931600,60,0.000000,0.009595,0.016941);
+]
+  2184:20151201:113039.262 Got signal [signal:15(SIGTERM),sender_pid:1,sender_uid:0,reason:0]. Exiting ...
+  2184:20151201:113043.960 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  2184:20151201:113043.960 Cannot connect to the database. Exiting...
+  1010:20151201:113233.887 Starting Zabbix Server. Zabbix 2.4.7 (revision 56694).
+  1010:20151201:113233.889 ****** Enabled features ******
+  1010:20151201:113233.889 SNMP monitoring:           YES
+  1010:20151201:113233.889 IPMI monitoring:           YES
+  1010:20151201:113233.889 WEB monitoring:            YES
+  1010:20151201:113233.889 VMware monitoring:         YES
+  1010:20151201:113233.889 Jabber notifications:      YES
+  1010:20151201:113233.889 Ez Texting notifications:  YES
+  1010:20151201:113233.889 ODBC:                      YES
+  1010:20151201:113233.889 SSH2 support:              YES
+  1010:20151201:113233.889 IPv6 support:              YES
+  1010:20151201:113233.889 ******************************
+  1010:20151201:113233.889 using configuration file: /etc/zabbix/zabbix_server.conf
+  1010:20151201:113236.895 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113236.895 database is down: reconnecting in 10 seconds
+  1010:20151201:113249.903 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113249.903 database is down: reconnecting in 10 seconds
+  1010:20151201:113302.911 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113302.911 database is down: reconnecting in 10 seconds
+  1010:20151201:113315.919 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113315.919 database is down: reconnecting in 10 seconds
+  1010:20151201:113328.926 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113328.927 database is down: reconnecting in 10 seconds
+  1010:20151201:113339.974 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113339.974 database is down: reconnecting in 10 seconds
+  1010:20151201:113352.990 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113352.990 database is down: reconnecting in 10 seconds
+  1010:20151201:113405.999 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113405.999 database is down: reconnecting in 10 seconds
+  1010:20151201:113419.007 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113419.007 database is down: reconnecting in 10 seconds
+  1010:20151201:113432.016 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113432.017 database is down: reconnecting in 10 seconds
+  1010:20151201:113442.042 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113442.043 database is down: reconnecting in 10 seconds
+  1010:20151201:113455.051 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113455.051 database is down: reconnecting in 10 seconds
+  1010:20151201:113508.058 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113508.059 database is down: reconnecting in 10 seconds
+  1010:20151201:113521.066 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113521.066 database is down: reconnecting in 10 seconds
+  1010:20151201:113534.074 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113534.074 database is down: reconnecting in 10 seconds
+  1010:20151201:113545.083 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113545.083 database is down: reconnecting in 10 seconds
+  1010:20151201:113558.091 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113558.091 database is down: reconnecting in 10 seconds
+  1010:20151201:113611.099 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113611.099 database is down: reconnecting in 10 seconds
+  1010:20151201:113624.106 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113624.107 database is down: reconnecting in 10 seconds
+  1010:20151201:113637.114 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113637.115 database is down: reconnecting in 10 seconds
+  1010:20151201:113648.128 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113648.128 database is down: reconnecting in 10 seconds
+  1010:20151201:113701.135 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113701.135 database is down: reconnecting in 10 seconds
+  1010:20151201:113714.143 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113714.143 database is down: reconnecting in 10 seconds
+  1010:20151201:113727.151 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113727.151 database is down: reconnecting in 10 seconds
+  1010:20151201:113740.159 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113740.159 database is down: reconnecting in 10 seconds
+  1010:20151201:113751.198 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113751.199 database is down: reconnecting in 10 seconds
+  1010:20151201:113804.210 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113804.210 database is down: reconnecting in 10 seconds
+  1010:20151201:113817.218 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113817.218 database is down: reconnecting in 10 seconds
+  1010:20151201:113830.224 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113830.224 database is down: reconnecting in 10 seconds
+  1010:20151201:113843.239 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113843.239 database is down: reconnecting in 10 seconds
+  1010:20151201:113854.257 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113854.257 database is down: reconnecting in 10 seconds
+  1010:20151201:113907.264 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113907.264 database is down: reconnecting in 10 seconds
+  1010:20151201:113920.278 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113920.278 database is down: reconnecting in 10 seconds
+  1010:20151201:113933.287 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113933.287 database is down: reconnecting in 10 seconds
+  1010:20151201:113946.298 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113946.299 database is down: reconnecting in 10 seconds
+  1010:20151201:113957.325 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:113957.325 database is down: reconnecting in 10 seconds
+  1010:20151201:114010.331 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114010.331 database is down: reconnecting in 10 seconds
+  1010:20151201:114023.339 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114023.339 database is down: reconnecting in 10 seconds
+  1010:20151201:114036.346 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114036.347 database is down: reconnecting in 10 seconds
+  1010:20151201:114049.358 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114049.358 database is down: reconnecting in 10 seconds
+  1010:20151201:114100.382 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114100.382 database is down: reconnecting in 10 seconds
+  1010:20151201:114113.391 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114113.392 database is down: reconnecting in 10 seconds
+  1010:20151201:114126.402 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114126.402 database is down: reconnecting in 10 seconds
+  1010:20151201:114139.410 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114139.410 database is down: reconnecting in 10 seconds
+  1010:20151201:114152.425 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114152.425 database is down: reconnecting in 10 seconds
+  1010:20151201:114203.454 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114203.454 database is down: reconnecting in 10 seconds
+  1010:20151201:114216.468 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114216.468 database is down: reconnecting in 10 seconds
+  1010:20151201:114229.475 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114229.475 database is down: reconnecting in 10 seconds
+  1010:20151201:114242.483 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114242.483 database is down: reconnecting in 10 seconds
+  1010:20151201:114255.490 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114255.491 database is down: reconnecting in 10 seconds
+  1010:20151201:114306.517 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114306.517 database is down: reconnecting in 10 seconds
+  1010:20151201:114319.523 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114319.523 database is down: reconnecting in 10 seconds
+  1010:20151201:114332.531 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114332.531 database is down: reconnecting in 10 seconds
+  1010:20151201:114345.538 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114345.539 database is down: reconnecting in 10 seconds
+  1010:20151201:114358.546 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114358.547 database is down: reconnecting in 10 seconds
+  1010:20151201:114409.578 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114409.578 database is down: reconnecting in 10 seconds
+  1010:20151201:114422.586 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114422.586 database is down: reconnecting in 10 seconds
+  1010:20151201:114435.598 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114435.598 database is down: reconnecting in 10 seconds
+  1010:20151201:114448.606 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114448.606 database is down: reconnecting in 10 seconds
+  1010:20151201:114501.614 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114501.614 database is down: reconnecting in 10 seconds
+  1010:20151201:114512.642 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114512.642 database is down: reconnecting in 10 seconds
+  1010:20151201:114525.650 [Z3001] connection to database 'zabbix' failed: [0] could not connect to server: No route to host
+	Is the server running on host "192.168.0.162" and accepting
+	TCP/IP connections on port 9999?
+
+  1010:20151201:114525.650 database is down: reconnecting in 10 seconds
+  1010:20151201:114540.482 database connection re-established
+  1010:20151201:114540.520 current database version (mandatory/optional): 02040000/02040000
+  1010:20151201:114540.520 required mandatory version: 02040000
+  1010:20151201:114540.568 server #0 started [main process]
+  2060:20151201:114540.569 server #1 started [configuration syncer #1]
+  2062:20151201:114540.569 server #3 started [poller #1]
+  2073:20151201:114540.571 server #14 started [icmp pinger #1]
+  2074:20151201:114540.571 server #15 started [alerter #1]
+  2064:20151201:114540.572 server #5 started [poller #3]
+  2066:20151201:114540.574 server #7 started [poller #5]
+  2072:20151201:114540.574 server #13 started [trapper #5]
+  2076:20151201:114540.575 server #17 started [timer #1]
+  2065:20151201:114540.575 server #6 started [poller #4]
+  2067:20151201:114540.576 server #8 started [unreachable poller #1]
+  2069:20151201:114540.578 server #10 started [trapper #2]
+  2079:20151201:114540.579 server #20 started [history syncer #1]
+  2080:20151201:114540.579 server #21 started [history syncer #2]
+  2082:20151201:114540.579 server #23 started [history syncer #4]
+  2071:20151201:114540.579 server #12 started [trapper #4]
+  2061:20151201:114540.579 server #2 started [db watchdog #1]
+  2063:20151201:114540.580 server #4 started [poller #2]
+  2068:20151201:114540.580 server #9 started [trapper #1]
+  2070:20151201:114540.580 server #11 started [trapper #3]
+  2083:20151201:114540.581 server #24 started [escalator #1]
+  2075:20151201:114540.585 server #16 started [housekeeper #1]
+  2077:20151201:114540.585 server #18 started [http poller #1]
+  2081:20151201:114540.585 server #22 started [history syncer #3]
+  2085:20151201:114540.586 server #26 started [self-monitoring #1]
+  2084:20151201:114540.586 server #25 started [proxy poller #1]
+  2078:20151201:114540.684 server #19 started [discoverer #1]
+  1010:20151201:114746.424 Got signal [signal:15(SIGTERM),sender_pid:1,sender_uid:0,reason:0]. Exiting ...
+  1010:20151201:114748.433 syncing history data...
+  1010:20151201:114748.433 syncing history data done
+  1010:20151201:114748.433 syncing trends data...
+  1010:20151201:114748.469 syncing trends data done
+  1010:20151201:114748.469 Zabbix Server stopped. Zabbix 2.4.7 (revision 56694).
+  2112:20151201:114842.535 Starting Zabbix Server. Zabbix 2.4.7 (revision 56694).
+  2112:20151201:114842.535 ****** Enabled features ******
+  2112:20151201:114842.535 SNMP monitoring:           YES
+  2112:20151201:114842.535 IPMI monitoring:           YES
+  2112:20151201:114842.535 WEB monitoring:            YES
+  2112:20151201:114842.535 VMware monitoring:         YES
+  2112:20151201:114842.535 Jabber notifications:      YES
+  2112:20151201:114842.535 Ez Texting notifications:  YES
+  2112:20151201:114842.535 ODBC:                      YES
+  2112:20151201:114842.535 SSH2 support:              YES
+  2112:20151201:114842.535 IPv6 support:              YES
+  2112:20151201:114842.535 ******************************
+  2112:20151201:114842.535 using configuration file: /etc/zabbix/zabbix_server.conf
+  2112:20151201:114842.567 current database version (mandatory/optional): 02040000/02040000
+  2112:20151201:114842.567 required mandatory version: 02040000
+  2112:20151201:114842.623 server #0 started [main process]
+  2113:20151201:114842.624 server #1 started [configuration syncer #1]
+  2115:20151201:114842.624 server #3 started [poller #1]
+  2133:20151201:114842.630 server #21 started [history syncer #2]
+  2125:20151201:114842.630 server #13 started [trapper #5]
+  2127:20151201:114842.630 server #15 started [alerter #1]
+  2116:20151201:114842.631 server #4 started [poller #2]
+  2114:20151201:114842.635 server #2 started [db watchdog #1]
+  2138:20151201:114842.636 server #26 started [self-monitoring #1]
+  2132:20151201:114842.636 server #20 started [history syncer #1]
+  2126:20151201:114842.637 server #14 started [icmp pinger #1]
+  2119:20151201:114842.637 server #7 started [poller #5]
+  2118:20151201:114842.641 server #6 started [poller #4]
+  2121:20151201:114842.648 server #9 started [trapper #1]
+  2128:20151201:114842.648 server #16 started [housekeeper #1]
+  2130:20151201:114842.649 server #18 started [http poller #1]
+  2136:20151201:114842.649 server #24 started [escalator #1]
+  2123:20151201:114842.650 server #11 started [trapper #3]
+  2134:20151201:114842.650 server #22 started [history syncer #3]
+  2120:20151201:114842.652 server #8 started [unreachable poller #1]
+  2122:20151201:114842.662 server #10 started [trapper #2]
+  2129:20151201:114842.662 server #17 started [timer #1]
+  2137:20151201:114842.673 server #25 started [proxy poller #1]
+  2124:20151201:114842.673 server #12 started [trapper #4]
+  2135:20151201:114842.673 server #23 started [history syncer #4]
+  2117:20151201:114842.674 server #5 started [poller #3]
+  2131:20151201:114842.688 server #19 started [discoverer #1]
+  2112:20151201:115735.763 Got signal [signal:15(SIGTERM),sender_pid:1,sender_uid:0,reason:0]. Exiting ...
+  2112:20151201:115737.773 syncing history data...
+  2112:20151201:115737.783 syncing history data done
+  2112:20151201:115737.784 syncing trends data...
+  2112:20151201:115737.834 syncing trends data done
+  2112:20151201:115737.835 Zabbix Server stopped. Zabbix 2.4.7 (revision 56694).
+  2189:20151201:115806.784 Starting Zabbix Server. Zabbix 2.4.7 (revision 56694).
+  2189:20151201:115806.784 ****** Enabled features ******
+  2189:20151201:115806.784 SNMP monitoring:           YES
+  2189:20151201:115806.784 IPMI monitoring:           YES
+  2189:20151201:115806.784 WEB monitoring:            YES
+  2189:20151201:115806.784 VMware monitoring:         YES
+  2189:20151201:115806.784 Jabber notifications:      YES
+  2189:20151201:115806.784 Ez Texting notifications:  YES
+  2189:20151201:115806.784 ODBC:                      YES
+  2189:20151201:115806.784 SSH2 support:              YES
+  2189:20151201:115806.784 IPv6 support:              YES
+  2189:20151201:115806.784 ******************************
+  2189:20151201:115806.784 using configuration file: /etc/zabbix/zabbix_server.conf
+  2189:20151201:115806.803 current database version (mandatory/optional): 02040000/02040000
+  2189:20151201:115806.803 required mandatory version: 02040000
+  2189:20151201:115806.852 server #0 started [main process]
+  2190:20151201:115806.852 server #1 started [configuration syncer #1]
+  2191:20151201:115806.852 server #2 started [db watchdog #1]
+  2192:20151201:115806.853 server #3 started [poller #1]
+  2215:20151201:115806.857 server #26 started [self-monitoring #1]
+  2209:20151201:115806.858 server #20 started [history syncer #1]
+  2201:20151201:115806.858 server #12 started [trapper #4]
+  2202:20151201:115806.858 server #13 started [trapper #5]
+  2195:20151201:115806.859 server #6 started [poller #4]
+  2194:20151201:115806.864 server #5 started [poller #3]
+  2204:20151201:115806.869 server #15 started [alerter #1]
+  2205:20151201:115806.869 server #16 started [housekeeper #1]
+  2207:20151201:115806.870 server #18 started [http poller #1]
+  2213:20151201:115806.870 server #24 started [escalator #1]
+  2200:20151201:115806.870 server #11 started [trapper #3]
+  2211:20151201:115806.870 server #22 started [history syncer #3]
+  2193:20151201:115806.871 server #4 started [poller #2]
+  2196:20151201:115806.874 server #7 started [poller #5]
+  2197:20151201:115806.885 server #8 started [unreachable poller #1]
+  2214:20151201:115806.900 server #25 started [proxy poller #1]
+  2203:20151201:115806.911 server #14 started [icmp pinger #1]
+  2212:20151201:115806.911 server #23 started [history syncer #4]
+  2198:20151201:115806.915 server #9 started [trapper #1]
+  2199:20151201:115806.915 server #10 started [trapper #2]
+  2206:20151201:115806.915 server #17 started [timer #1]
+  2210:20151201:115806.916 server #21 started [history syncer #2]
+  2208:20151201:115806.922 server #19 started [discoverer #1]
+  2205:20151201:122808.185 executing housekeeper
+  2209:20151201:124611.625 [Z3005] query failed: [0] PGRES_FATAL_ERROR:server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ [begin;]
+  2213:20151201:124611.626 [Z3005] query failed: [0] PGRES_FATAL_ERROR:server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ [select escalationid,actionid,triggerid,eventid,r_eventid,nextcheck,esc_step,status,itemid from escalations order by actionid,triggerid,itemid,escalationid]
+  2204:20151201:124611.626 [Z3005] query failed: [0] PGRES_FATAL_ERROR:server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ [select a.alertid,a.mediatypeid,a.sendto,a.subject,a.message,a.status,mt.mediatypeid,mt.type,mt.description,mt.smtp_server,mt.smtp_helo,mt.smtp_email,mt.exec_path,mt.gsm_modem,mt.username,mt.passwd,a.retries from alerts a,media_type mt where a.mediatypeid=mt.mediatypeid and a.status=0 and a.alerttype=0 order by a.alertid]
+  2208:20151201:124611.627 [Z3005] query failed: [0] PGRES_FATAL_ERROR:server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ [select distinct r.druleid,r.iprange,r.name,c.dcheckid,r.proxy_hostid from drules r left join dchecks c on c.druleid=r.druleid and c.uniq=1 where r.status=0 and (r.nextcheck<=1448941568 or r.nextcheck>1448941568+r.delay) and mod(r.druleid,1)=0]
+  2207:20151201:124611.628 [Z3005] query failed: [0] PGRES_FATAL_ERROR:server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ [select h.hostid,h.host,h.name,t.httptestid,t.name,t.variables,t.headers,t.agent,t.authentication,t.http_user,t.http_password,t.http_proxy,t.retries,t.ssl_cert_file,t.ssl_key_file,t.ssl_key_password,t.verify_peer,t.verify_host from httptest t,hosts h where t.hostid=h.hostid and t.nextcheck<=1448941571 and mod(t.httptestid,1)=0 and t.status=0 and h.proxy_hostid is null and h.status=0 and (h.maintenance_status=0 or h.maintenance_type=0)]
+  2190:20151201:124611.628 [Z3005] query failed: [0] PGRES_FATAL_ERROR:server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ [select refresh_unsupported,discovery_groupid,snmptrap_logging,severity_name_0,severity_name_1,severity_name_2,severity_name_3,severity_name_4,severity_name_5,hk_events_mode,hk_events_trigger,hk_events_internal,hk_events_discovery,hk_events_autoreg,hk_services_mode,hk_services,hk_audit_mode,hk_audit,hk_sessions_mode,hk_sessions,hk_history_mode,hk_history_global,hk_history,hk_trends_mode,hk_trends_global,hk_trends from config]
+  2211:20151201:124615.270 [Z3005] query failed: [0] PGRES_FATAL_ERROR:server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ [begin;]
+  2212:20151201:124620.290 [Z3005] query failed: [0] PGRES_FATAL_ERROR:server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ [begin;]
+  2210:20151201:124625.293 [Z3005] query failed: [0] PGRES_FATAL_ERROR:server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ [begin;]
+  2206:20151201:124630.202 [Z3005] query failed: [0] PGRES_FATAL_ERROR:server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ [begin;]
+  2197:20151201:124640.560 [Z3005] query failed: [0] PGRES_FATAL_ERROR:server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+ [begin;]
+  2189:20151201:130400.797 Got signal [signal:15(SIGTERM),sender_pid:1,sender_uid:0,reason:0]. Exiting ...
+  2189:20151201:130402.810 syncing history data...
+  2189:20151201:130402.810 syncing history data done
+  2189:20151201:130402.810 syncing trends data...
+  2189:20151201:130402.838 syncing trends data done
+  2189:20151201:130402.838 Zabbix Server stopped. Zabbix 2.4.7 (revision 56694).
+  1282:20151201:130555.442 Starting Zabbix Server. Zabbix 2.4.7 (revision 56694).
+  1282:20151201:130555.488 ****** Enabled features ******
+  1282:20151201:130555.488 SNMP monitoring:           YES
+  1282:20151201:130555.488 IPMI monitoring:           YES
+  1282:20151201:130555.488 WEB monitoring:            YES
+  1282:20151201:130555.488 VMware monitoring:         YES
+  1282:20151201:130555.488 Jabber notifications:      YES
+  1282:20151201:130555.488 Ez Texting notifications:  YES
+  1282:20151201:130555.488 ODBC:                      YES
+  1282:20151201:130555.488 SSH2 support:              YES
+  1282:20151201:130555.488 IPv6 support:              YES
+  1282:20151201:130555.488 ******************************
+  1282:20151201:130555.488 using configuration file: /etc/zabbix/zabbix_server.conf
+  1282:20151201:130555.538 current database version (mandatory/optional): 02040000/02040000
+  1282:20151201:130555.538 required mandatory version: 02040000
+  1282:20151201:130555.633 server #0 started [main process]
+  1412:20151201:130555.634 server #1 started [configuration syncer #1]
+  1413:20151201:130555.634 server #2 started [db watchdog #1]
+  1414:20151201:130555.634 server #3 started [poller #1]
+  1415:20151201:130555.636 server #4 started [poller #2]
+  1416:20151201:130555.638 server #5 started [poller #3]
+  1433:20151201:130555.639 server #22 started [history syncer #3]
+  1423:20151201:130555.639 server #12 started [trapper #4]
+  1425:20151201:130555.640 server #14 started [icmp pinger #1]
+  1417:20151201:130555.640 server #6 started [poller #4]
+  1424:20151201:130555.641 server #13 started [trapper #5]
+  1419:20151201:130555.641 server #8 started [unreachable poller #1]
+  1418:20151201:130555.642 server #7 started [poller #5]
+  1426:20151201:130555.643 server #15 started [alerter #1]
+  1420:20151201:130555.644 server #9 started [trapper #1]
+  1428:20151201:130555.644 server #17 started [timer #1]
+  1421:20151201:130555.644 server #10 started [trapper #2]
+  1429:20151201:130555.645 server #18 started [http poller #1]
+  1431:20151201:130555.645 server #20 started [history syncer #1]
+  1437:20151201:130555.645 server #26 started [self-monitoring #1]
+  1432:20151201:130555.647 server #21 started [history syncer #2]
+  1427:20151201:130555.648 server #16 started [housekeeper #1]
+  1422:20151201:130555.648 server #11 started [trapper #3]
+  1436:20151201:130555.649 server #25 started [proxy poller #1]
+  1434:20151201:130555.649 server #23 started [history syncer #4]
+  1435:20151201:130555.650 server #24 started [escalator #1]
+  1430:20151201:130555.828 server #19 started [discoverer #1]

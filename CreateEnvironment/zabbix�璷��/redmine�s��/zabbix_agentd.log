@@ -1,0 +1,83 @@
+   877:20151201:083606.116 Got signal [signal:15(SIGTERM),sender_pid:1,sender_uid:0,reason:0]. Exiting ...
+   877:20151201:083606.132 Zabbix Agent stopped. Zabbix 2.4.7 (revision 56694).
+  1120:20151201:083621.969 Starting Zabbix Agent [zabbix02.vmtest.local]. Zabbix 2.4.7 (revision 56694).
+  1120:20151201:083622.021 using configuration file: /etc/zabbix/zabbix_agentd.conf
+  1120:20151201:083622.022 agent #0 started [main process]
+  1204:20151201:083622.022 agent #1 started [collector]
+  1207:20151201:083622.023 agent #4 started [listener #3]
+  1205:20151201:083622.023 agent #2 started [listener #1]
+  1208:20151201:083622.023 agent #5 started [active checks #1]
+  1206:20151201:083622.023 agent #3 started [listener #2]
+  1208:20151201:083625.023 active check configuration update from [192.168.0.162:10051] started to fail (cannot connect to [[192.168.0.162]:10051]: [4] Interrupted system call)
+  1208:20151201:084137.247 active check configuration update from [192.168.0.162:10051] is working again
+  1208:20151201:084340.318 active check configuration update from [192.168.0.162:10051] started to fail (cannot connect to [[192.168.0.162]:10051]: [4] Interrupted system call)
+  1208:20151201:084741.065 active check configuration update from [192.168.0.162:10051] is working again
+  1120:20151201:085347.837 Got signal [signal:15(SIGTERM),sender_pid:1,sender_uid:0,reason:0]. Exiting ...
+  1120:20151201:085347.842 Zabbix Agent stopped. Zabbix 2.4.7 (revision 56694).
+  2181:20151201:085347.856 Starting Zabbix Agent [zabbix02.vmtest.local]. Zabbix 2.4.7 (revision 56694).
+  2181:20151201:085347.857 using configuration file: /etc/zabbix/zabbix_agentd.conf
+  2181:20151201:085347.857 agent #0 started [main process]
+  2183:20151201:085347.858 agent #2 started [listener #1]
+  2184:20151201:085347.859 agent #3 started [listener #2]
+  2185:20151201:085347.859 agent #4 started [listener #3]
+  2186:20151201:085347.860 agent #5 started [active checks #1]
+  2182:20151201:085347.860 agent #1 started [collector]
+  2186:20151201:090749.701 active check configuration update from [192.168.0.162:10051] started to fail (cannot connect to [[192.168.0.162]:10051]: [113] No route to host)
+  2181:20151201:091548.649 Got signal [signal:15(SIGTERM),sender_pid:1,sender_uid:0,reason:0]. Exiting ...
+  2181:20151201:091548.663 Zabbix Agent stopped. Zabbix 2.4.7 (revision 56694).
+   829:20151201:091617.928 Starting Zabbix Agent [zabbix02.vmtest.local]. Zabbix 2.4.7 (revision 56694).
+   829:20151201:091617.931 using configuration file: /etc/zabbix/zabbix_agentd.conf
+   829:20151201:091617.931 agent #0 started [main process]
+   833:20151201:091617.931 agent #1 started [collector]
+   834:20151201:091617.932 agent #2 started [listener #1]
+   835:20151201:091617.932 agent #3 started [listener #2]
+   836:20151201:091617.932 agent #4 started [listener #3]
+   837:20151201:091617.932 agent #5 started [active checks #1]
+   837:20151201:091620.933 active check configuration update from [192.168.0.162:10051] started to fail (cannot connect to [[192.168.0.162]:10051]: [4] Interrupted system call)
+   829:20151201:094608.754 Got signal [signal:15(SIGTERM),sender_pid:1,sender_uid:0,reason:0]. Exiting ...
+   829:20151201:094608.759 Zabbix Agent stopped. Zabbix 2.4.7 (revision 56694).
+  2048:20151201:094608.774 Starting Zabbix Agent [zabbix02.vmtest.local]. Zabbix 2.4.7 (revision 56694).
+  2048:20151201:094608.774 using configuration file: /etc/zabbix/zabbix_agentd.conf
+  2048:20151201:094608.774 agent #0 started [main process]
+  2052:20151201:094608.776 agent #4 started [listener #3]
+  2053:20151201:094608.777 agent #5 started [active checks #1]
+  2049:20151201:094608.778 agent #1 started [collector]
+  2050:20151201:094608.778 agent #2 started [listener #1]
+  2051:20151201:094608.778 agent #3 started [listener #2]
+  2053:20151201:094610.760 active check configuration update from [192.168.0.162:10051] started to fail (cannot connect to [[192.168.0.162]:10051]: [113] No route to host)
+  2053:20151201:095836.217 active check configuration update from [192.168.0.162:10051] is working again
+  2048:20151201:100020.537 Got signal [signal:15(SIGTERM),sender_pid:1,sender_uid:0,reason:0]. Exiting ...
+  2048:20151201:100020.542 Zabbix Agent stopped. Zabbix 2.4.7 (revision 56694).
+  2218:20151201:100020.556 Starting Zabbix Agent [zabbix02.vmtest.local]. Zabbix 2.4.7 (revision 56694).
+  2218:20151201:100020.556 using configuration file: /etc/zabbix/zabbix_agentd.conf
+  2218:20151201:100020.556 agent #0 started [main process]
+  2221:20151201:100020.557 agent #3 started [listener #2]
+  2222:20151201:100020.558 agent #4 started [listener #3]
+  2220:20151201:100020.558 agent #2 started [listener #1]
+  2223:20151201:100020.558 agent #5 started [active checks #1]
+  2219:20151201:100020.559 agent #1 started [collector]
+  2223:20151201:111821.566 active check configuration update from [192.168.0.162:10051] started to fail (cannot connect to [[192.168.0.162]:10051]: [113] No route to host)
+  2218:20151201:113039.284 Got signal [signal:15(SIGTERM),sender_pid:1,sender_uid:0,reason:0]. Exiting ...
+  2218:20151201:113039.287 Zabbix Agent stopped. Zabbix 2.4.7 (revision 56694).
+  1120:20151201:113233.940 Starting Zabbix Agent [zabbix02.vmtest.local]. Zabbix 2.4.7 (revision 56694).
+  1120:20151201:113233.953 using configuration file: /etc/zabbix/zabbix_agentd.conf
+  1120:20151201:113233.953 agent #0 started [main process]
+  1151:20151201:113233.955 agent #5 started [active checks #1]
+  1147:20151201:113233.955 agent #1 started [collector]
+  1148:20151201:113233.955 agent #2 started [listener #1]
+  1150:20151201:113233.955 agent #4 started [listener #3]
+  1149:20151201:113233.956 agent #3 started [listener #2]
+  1151:20151201:113236.895 active check configuration update from [192.168.0.162:10051] started to fail (cannot connect to [[192.168.0.162]:10051]: [113] No route to host)
+  1151:20151201:114612.736 active check configuration update from [192.168.0.162:10051] is working again
+  1151:20151201:114812.815 active check configuration update from [192.168.0.162:10051] started to fail (cannot connect to [[192.168.0.162]:10051]: [111] Connection refused)
+  1151:20151201:114912.871 active check configuration update from [192.168.0.162:10051] is working again
+  1120:20151201:130400.797 Got signal [signal:15(SIGTERM),sender_pid:1,sender_uid:0,reason:0]. Exiting ...
+  1120:20151201:130400.836 Zabbix Agent stopped. Zabbix 2.4.7 (revision 56694).
+  1133:20151201:130555.372 Starting Zabbix Agent [zabbix02.vmtest.local]. Zabbix 2.4.7 (revision 56694).
+  1133:20151201:130555.374 using configuration file: /etc/zabbix/zabbix_agentd.conf
+  1133:20151201:130555.374 agent #0 started [main process]
+  1154:20151201:130555.374 agent #1 started [collector]
+  1156:20151201:130555.375 agent #3 started [listener #2]
+  1158:20151201:130555.375 agent #5 started [active checks #1]
+  1155:20151201:130555.375 agent #2 started [listener #1]
+  1157:20151201:130555.375 agent #4 started [listener #3]

@@ -1,0 +1,181 @@
+
+http://qiita.com/mmmm/items/3a6423ed219189da6cba
+
+ストリーミングレプリケーション環境を構築する上で、一応知っておいたほうがいいこと。
+
+
+レプリケーションの仕組み
+マスタDBで発生したWALファイルを、スレーブとなるDBに反映させることで、レプリケーションを実現している。
+
+
+レプリケーションの同期モード
+こちらの記事がわかりやすい。
+http://codezine.jp/article/detail/7109
+
+同期・メモリ同期は、スレーブが１台の場合はスレーブに障害が発生すると、マスタへの更新も行われず、全体の障害につながってしまうので注意。
+
+
+今回試した環境?CentOS 6.5
+?PostgreSQL 9.3.2
+?マスタ１台、スレーブ１台
+
+
+構築手順
+
+SSH鍵認証の設定
+今回は、マスタサーバ上に出力したWALファイルを、スレーブサーバからSCPで受信する方式を取る。
+マスタ・スレーブ間でWALファイルの送受信をするために、双方向のSSH鍵認証の設定をする。
+
+
+マスタからスレーブへのSSH接続
+LinuxユーザはPostgreSQLの実行ユーザ。(デフォルトでは、postgresのはず)
+
+マスタサーバ上で、認証用の鍵を生成する。
+※パスワードは未入力にする。
+
+
+ssh-keygen -t rsa
+
+
+公開鍵をスレーブサーバに転送。
+
+
+scp ~/.ssh/id_rsa.pub [スレーブIP]:/tmp/
+
+
+スレーブサーバ上で、転送された公開鍵をauthorized_keysに登録する。
+
+
+cat /tmp/id_rsa.pub >> ~/.ssh/authorized_keys
+# 念のためパーミッションを設定
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+
+
+これでマスタからスレーブに対しては、鍵認証で接続できるようになったはず。
+マスタ上で下記コマンドを実行して、スレーブにログインできればOK。
+
+
+ssh [スレーブIP]
+
+
+
+スレーブからマスタへのSSH接続
+上記手順の逆を行う。詳細は割愛。
+
+スレーブ上で下記コマンドを実行して、マスタにログインできれば完了。
+
+
+ssh [マスタIP]
+
+
+
+マスタDBにレプリケーション用のユーザを作成
+REPLICATIONという権限を保持した、レプリケーション専用ユーザを作成する。
+※ ユーザ名、パスワードは任意。
+
+
+=# CREATE USER repl_user REPLICATION PASSWORD 'replication';
+
+
+
+マスタDBのパラメータ設定
+作成したユーザが、replication というDBへの接続できるように、pg_hba.conを書き換える。
+
+
+pg_hba.conf
+ 
+host replication repl_user 127.0.0.1/32 md5
+host replication repl_user [スレーブIP]/32 md5
+host replication repl_user [マスタIP]/32 md5
+
+
+ストリーミングレプリケーションを行うために、postgresql.confを変更する。
+
+
+postgresql.conf
+ 
+#WALの出力内容をレプリケーションに対応
+wal_level = hot_standby 
+
+#同期方式:スレーブ非同期
+synchronous_commit = local
+
+#スレーブの数 + 1 
+max_wal_senders = 2 
+#スレーブDBの名前(任意)
+synchronous_standby_names = 'slave-1'
+
+#WALセグメントをアーカイブする
+archive_mode = on 
+
+#WALをアーカイブする時に利用するpostgresが利用するコマンド
+#ここでは、マスタサーバの別ディレクトリにコピーしている
+archive_command = 'cp -i %p /var/lib/pgsql/archive/%f < /dev/null'
+
+#レプリケーション用に残しておくWALファイルの数
+#WALファイルは順次削除されていくが、ここに指定した数だけはKeepされる。
+#スレーブサーバへのレプリケーションが一時的に停止した場合でも、Keepされた範囲までは追いつくことができる。
+wal_keep_segments = 16 
+
+
+変更を反映させるために、postgresql再起動する。
+
+
+pg_ctl stop -D /var/lib/pgsql/data
+pg_ctl start -D /var/lib/pgsql/data
+
+
+
+basebackupの作成
+WALの送受信によるレプリケーションを開始するには、ある静止点の状態でマスタとスレーブのDBを同期させる必要がある。
+
+スレーブで、pg_basebackupコマンドを実行することで、マスタDBのベースバックアップを行える。
+
+
+pg_basebackup -h [マスタIP] -U repl_user -D /var/lib/pgsql/data -P --xlog
+
+
+
+スレーブDBのパラメータ設定
+pg_basebackupにより、スレーブサーバにはマスタサーバの設定ファイルがコピーされているので、下記部分だけを追加する。
+
+スレーブへのWAL反映は、PostgreSQLのリカバリ機能を利用して行う。
+
+
+recovery.conf
+ 
+# onにすることで、全てのWALファイルを適用してもリカバリ完了状態とならず、WALの受信待ち状態となる
+standby_mode = on
+
+# マスタサーバのWALアーカイブの保存先を指定
+restore_command = 'scp [マスタIP]:/var/lib/pgsql/archive/%f %p'
+
+# マスタサーバに作成したレプリケーション用ユーザで接続する
+primary_conninfo = 'host=[マスタIP] port=5432 user=repl_user password=replication application_name=slave-1'
+
+
+postgresql.confも１行だけ変更する。
+もし、マスタとスレーブでサーバスペックが異なるようであれば、メモリ関連のパラメータとなどは適切に見直す。
+
+
+postgresql.conf
+ 
+hot_standby = on
+
+
+スレーブのPostgreSQLを起動する。
+
+
+pg_ctl start -D /var/lib/pgsql/data
+
+
+これで正常に起動が終了すれば完了。既にレプリケーションが行われている。
+
+
+レプリケーションの確認
+マスタサーバ上のpg_stat_replicationテーブルで、レプリケーションの状態が確認できる。
+
+
+psql -c "select * from pg_stat_replication"
+

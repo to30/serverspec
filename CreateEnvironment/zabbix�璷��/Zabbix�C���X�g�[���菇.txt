@@ -1,0 +1,173 @@
+
+
+
+
+RHELのDVDイメージを暫定リポジトリとする
+
+cd /media/
+mkdir cdrom
+mount /dev/cdrom /media/cdrom
+cd /etc/yum.repos.d/
+vi rhel-dvd.repo
+
+[rhel-dvd]
+name=Red Hat Enterprise Linux 6.4 - x86_64 - DVD
+baseurl=file:///media/cdrom/
+enabled=1 #->CDをアンマウントしておくなら「0」に変更し使わなくする
+gpgcheck=1
+gpgkey=file:///media/cdrom/RPM-GPG-KEY-redhat-release
+
+
+取り敢えず足りないものはCentOSのリポジトリから取ってくる
+vi CentOS-Base.repo
+[CentOS]
+name=CentOS ripo
+baseurl=http://mirror.centos.org/centos-7/7/os/x86_64/
+enabled=1
+gpgcheck=0
+#gpgkey=file:///media/cdrom/RPM-GPG-KEY-redhat-releas
+
+【参考】
+PHP関連は、定番ですがIUSのレポジトリが各種パッケージが揃っていて使いやすいと思います
+rpm -ivh http://dl.iuscommunity.org/pub/ius/stable/Redhat/7/x86_64/ius-release-1.0-13.ius.el7.noarch.rpm
+IUSのレポジトリはEPLEレポジトリに依存性があるので、EPELも追加
+rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+
+
+
+・Zabbixのyumリポジトリの登録
+rpm -ivh http://repo.zabbix.com/zabbix/2.4/rhel/7/x86_64/zabbix-release-2.4-1.el7.noarch.rpm
+
+インストール
+yum install --downloadonly --downloaddir=/root/download zabbix-server-pgsql zabbix-web-pgsql zabbix-web-japanese
+yum -y install zabbix-server-pgsql zabbix-web-pgsql zabbix-web-japanese
+
+yum install --downloadonly --downloaddir=/root/download zabbix-agent
+yum -y install zabbix-agent
+
+yum install --downloadonly --downloaddir=/root/download zabbix-get
+yum -y install zabbix-get
+
+
+
+########################
+DB側作業
+
+cd /usr/share/doc/
+mkdir zabbix-server-pgsql-2.4.7
+rsync -avzh root@192.168.0.162:/usr/share/doc/zabbix-server-pgsql-2.4.7/ zabbix-server-pgsql-2.4.7/
+
+su - postgres
+Zabbix用のユーザとDBを作成します。
+DBはzabbixユーザをオーナーにしました。
+ユーザ作成時に聞かれるロールは全てNoです。
+
+接続ユーザの作成
+createuser --pwprompt zabbix
+データベース作成
+createdb --owner=zabbix zabbix
+
+cd /usr/share/doc/zabbix-server-pgsql-2.4.7/create/
+
+psql -U zabbix zabbix < schema.sql
+psql -U zabbix zabbix < images.sql
+psql -U zabbix zabbix < data.sql
+
+############################
+Zabbixサーバ側作業
+
+PHP の設定ファイルを修正します。
+# vi /etc/php.ini
+
+（変更前）
+max_execution_time = 30
+max_input_time = 60
+post_max_size = 8M
+upload_max_filesize = 2M
+;date.timezone =
+
+（変更後）
+max_execution_time = 600
+max_input_time = 600
+post_max_size = 32M
+upload_max_filesize = 16M
+date.timezone = Asia/Tokyo
+
+・Zabbixサーバの設定
+vi /etc/zabbix/zabbix_server.conf
+以下の行を変更もしくは追加します。
+DBHost=  ← PostgreSQLをZabbixサーバと同じホストで動作させる場合は空欄にします
+DBUser=zabbix
+DBPassword=（パスワード）
+DBPort=5432
+
+
+systemctl start zabbix-server
+systemctl enable zabbix-server.service
+
+systemctl start httpd
+systemctl enable httpd.service
+
+
+
+Zabbix エージェントの設定ファイルを修正
+# vi /etc/zabbix/zabbix_agentd.conf
+
+以下の行を変更もしくは追加します。
+
+ServerActive=192.168.0.162:10051
+HostnameItem=system.hostname
+ServerActive=（Zabbix サーバの IP アドレス）
+
+systemctl start zabbix-agent
+systemctl enable zabbix-agent
+
+Zabbixエージェントの動作確認
+zabbix_get -s 192.168.0.162 -p 10050 -k agent.version
+
+WEBで設定
+データベースタイプ PostgreSQL 
+データベースサーバー 192.168.0.162 （pgpoolIIのVIP）
+データベースポート 5432 （pgpoolIIで設定した9999）
+データベース名 zabbix 
+データベースユーザー zabbix 
+データベースパスワード ****** 
+データベーススキーマ  
+
+ 
+Zabbixサーバー 192.168.0.162 （pgpoolIIのVIP）
+Zabbixサーバーのポート 10051 
+Zabbixサーバー名  
+
+
+
+
+
+
+【参考】
+マスタ登録テーブルだけを同期したいとか、トリガーの列を調べるにはSQLトレースを使う。
+マスターの方は何ならPostgreSQLはしょせんファイルなのでMD5SUMチェックを使えばもっと簡単にできるかも
+
+以下PostgreSQLの場合
+PostgreSQL：SQLトレースを取得する方法
+
+Oracleのように、動的に指定するのではなく、起動パラメタとして指定し、出力はログファイルにテキスト形式で出てくるようだ。
+
+postgresql.confファイルのオプション指定で、
+
+log_duration = true
+ log_statement = true
+
+の2行を設定する方法があるが、
+この設定をする代わりに
+
+log_min_duration_statement = 0
+
+と設定するほうが、ログが1行に表示されて見やすい。
+
+postgresql.confの設定が終わったら、バックエンドを再起動する。
+※再起動時には、pg_ctlの-lオプションで出力するログファイルを指定する。
+
+pg_ctl -l /tmp/pg.log -D /tmp/pg startすると、/tmp/pg.log というファイルに実行されたSQL文とそのSQL文の実行時間などが表示される。
+
+

