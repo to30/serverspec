@@ -11,6 +11,10 @@ hosts = [
     :name  => 'postgresql2.vmtest.local',
     :roles => %w( base production db ),
   },
+  {
+    :name  => 'ansible.vmtest.local',
+    :roles => %w( staging ),
+  },
 ]
 
 

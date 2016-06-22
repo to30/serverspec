@@ -5,4 +5,3 @@ describe file('/etc/logrotate.d/syslog') do
   it { should contain 'messages' }
   it { should contain 'secure' }
 end
-
