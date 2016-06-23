@@ -25,7 +25,7 @@ rake serverspec:postgresql2  # Run serverspec to postgresql2.vmtest.local
 ```b
 [root@ansible serverspec]# rake serverspec:postgresql1 CI_FLAG=true 
 ```
-
+ディレクトリ構造は下記のようにspecフォルダの下にロールや環境に基づいたディレクトリを作成しています
     .  
     |-- README.md  
     |-- Rakefile  
@@ -57,4 +57,4 @@ rake serverspec:postgresql2  # Run serverspec to postgresql2.vmtest.local
             `-- gems_spec.rb  
   
 ---
-#テスト内容はともかく
+テストコード自体は動作しますが未だサンプルです
