@@ -1,7 +1,16 @@
 # インフラテスト：サンプルテストコード
 
 これはインフラテストのためのサンプルコードです。
-
+specフォルダの下に環境だったり各サーバのロールだったりのディレクトリを作成しその中に各種テストコードを書いていきます。
+そしてそれらをRakefileファイルに
+hosts = [  
+  {  
+    :name  => 'postgresql1.vmtest.local',  
+    :roles => %w( base production db ),  
+  },  
+}  
+  
+  
     .  
     |-- README.md  
     |-- Rakefile  
