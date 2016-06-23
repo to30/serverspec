@@ -11,7 +11,7 @@ hosts = [
   },
 }
 ```
-と書くことでサーバpostgresql1.vmtest.localは、「base」「production」「db」ディレクトリ下のテストコードを実行します  
+と書くことでサーバpostgresql1.vmtest.localは、&color(「base」「production」「db」)ディレクトリ下のテストコードを実行します  
  
 
     .  
