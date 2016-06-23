@@ -3,15 +3,17 @@
 これはインフラテストのためのサンプルコードです。
 specフォルダの下に環境だったり各サーバのロールだったりのディレクトリを作成しその中に各種テストコードを書いていきます。  
 そしてそれらをRakefileファイルに  
-    hosts = [  
-      {  
-        :name  => 'postgresql1.vmtest.local',  
-        :roles => %w( base production db ),  
-      },  
-    }  
+```r
+hosts = [
+  {
+    :name  => 'postgresql1.vmtest.local',
+    :roles => %w( base production db ),
+  },
+}
+```
 と書くことでサーバpostgresql1.vmtest.localは、「base」「production」「db」ディレクトリ下のテストコードを実行します  
-  
-  
+ 
+
     .  
     |-- README.md  
     |-- Rakefile  
