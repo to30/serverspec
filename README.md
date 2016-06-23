@@ -11,8 +11,20 @@ hosts = [
   },
 }
 ```
-と書くことでサーバpostgresql1.vmtest.localは、「base」「production」「db」ディレクトリ下のテストコードを実行します  
- 
+と書くことでサーバpostgresql1.vmtest.localは、「base」「production」「db」ディレクトリ下のテストコードが実行対象になります 
+使い方は 
+実施可能なテストの一覧表示 
+```b
+[root@ansible serverspec]# rake -T
+rake serverspec              # Run serverspec to all hosts
+rake serverspec:ansible      # Run serverspec to ansible.vmtest.local
+rake serverspec:postgresql1  # Run serverspec to postgresql1.vmtest.local
+rake serverspec:postgresql2  # Run serverspec to postgresql2.vmtest.local
+```
+サーバpostgresql1のテスト実行　（「CI_FLAG=true」を付けることでテスト結果をJUnit形式に変換）  
+```b
+[root@ansible serverspec]# rake serverspec:postgresql1 CI_FLAG=true 
+```
 
     .  
     |-- README.md  
@@ -22,26 +34,27 @@ hosts = [
     |       |-- results_postgresql1.vmtest.local.xml  
     |       `-- results_postgresql2.vmtest.local.xml  
     `-- spec  
-        |-- apex  
+        |-- apex （apex関連のテスト） 
         |   `-- apex_spec.rb  
-        |-- base  
+        |-- base  （全サーバ共通のテスト）  
         |   |-- kernel_parameter_spec.rb  
         |   |-- logs_spec.rb  
         |   |-- packages_spec.rb  
         |   |-- security_spec.rb  
         |   `-- users_and_groups_spec.rb  
-        |-- db  
+        |-- db  （DB関連のテスト） 
         |   |-- kernel_parameter_spec.rb  
         |   `-- postgresql_spec.rb  
-        |-- hulft  
+        |-- hulft  （HULFT関連のテスト）  
         |   `-- hulft_spec.rb  
-        |-- linkexpress  
+        |-- linkexpress　　（Linkexpress関連のテスト）  
         |   `-- linkexpress_spec.rb  
-        |-- production  
+        |-- production  （プロダクション環境独自のテスト）  
         |   |-- production_hosts_spec.rb  
         |   `-- production_network_spec.rb  
         |-- spec_helper.rb  
-        `-- staging  
+        `-- staging  （ステージング環境独自のテスト）  
             `-- gems_spec.rb  
   
-
+---
+#テスト内容はともかく
