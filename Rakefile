@@ -5,11 +5,15 @@ require 'rspec/core/rake_task'
 hosts = [
   {
     :name  => 'postgresql1.vmtest.local',
-    :roles => %w( base production db ),
+    :roles => %w( base environment/production middle/db ),
   },
   {
     :name  => 'postgresql2.vmtest.local',
-    :roles => %w( base production db ),
+    :roles => %w( base environment/production middle/db ),
+  },
+  {
+    :name  => 'ansible.vmtest.local',
+    :roles => %w( environment/staging ),
   },
 ]
 
