@@ -1,4 +1,0 @@
-standby_mode             = 'on'
-primary_conninfo         = 'host=pgpool01 port=5432 user=postgres'
-recovery_target_timeline = 'latest'
-restore_command          = 'cp /var/lib/pgsql/alice-arc/%f "%p" 2> /dev/null'

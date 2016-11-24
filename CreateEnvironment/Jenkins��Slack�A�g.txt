@@ -1,8 +1,0 @@
-slack notification pluginをインストールする。
-https://slack.com/signin?redir=%2Fservices%2Fnew%2Fjenkins-ci
-からAPIキー等を取得し、Jenkinsへ登録する
-
-
-
-
-
